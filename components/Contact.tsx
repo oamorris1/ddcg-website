@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const contactItems = [
   { icon: "✉", title: "info@ddcg.net", sub: "Email Us" },
@@ -17,6 +17,9 @@ function onF(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLText
 function onB(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) { e.currentTarget.style.borderColor = "var(--border)"; }
 
 export default function Contact() {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const formRef = useRef<HTMLFormElement>(null);
+
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); } }),
@@ -25,6 +28,38 @@ export default function Contact() {
     document.querySelectorAll(".contact-reveal").forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!formRef.current) return;
+
+    setStatus("sending");
+    const fd = new FormData(formRef.current);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: fd.get("name"),
+          company: fd.get("company"),
+          email: fd.get("email"),
+          phone: fd.get("phone"),
+          service: fd.get("service"),
+          message: fd.get("message"),
+        }),
+      });
+
+      if (res.ok) {
+        setStatus("sent");
+        formRef.current.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  }
 
   return (
     <section id="contact" className="relative overflow-hidden" style={{ background: "var(--cream)", borderTop: "1px solid var(--border)", padding: "120px 60px" }}>
@@ -74,49 +109,61 @@ export default function Contact() {
         </div>
 
         {/* RIGHT — Form */}
-        <form onSubmit={(e) => e.preventDefault()} className="contact-reveal reveal reveal-delay-2 flex flex-col gap-5">
+        <form ref={formRef} onSubmit={handleSubmit} className="contact-reveal reveal reveal-delay-2 flex flex-col gap-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Name</label>
-              <input type="text" placeholder="Your name" required style={inputStyle} onFocus={onF} onBlur={onB} />
+              <input name="name" type="text" placeholder="Your name" required style={inputStyle} onFocus={onF} onBlur={onB} />
             </div>
             <div>
               <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Company</label>
-              <input type="text" placeholder="Company name" style={inputStyle} onFocus={onF} onBlur={onB} />
+              <input name="company" type="text" placeholder="Company name" style={inputStyle} onFocus={onF} onBlur={onB} />
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Email</label>
-              <input type="email" placeholder="you@company.com" required style={inputStyle} onFocus={onF} onBlur={onB} />
+              <input name="email" type="email" placeholder="you@company.com" required style={inputStyle} onFocus={onF} onBlur={onB} />
             </div>
             <div>
               <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Phone</label>
-              <input type="tel" placeholder="(555) 000-0000" style={inputStyle} onFocus={onF} onBlur={onB} />
+              <input name="phone" type="tel" placeholder="(555) 000-0000" style={inputStyle} onFocus={onF} onBlur={onB} />
             </div>
           </div>
           <div>
             <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Service Interest</label>
-            <select defaultValue="" style={{ ...inputStyle, appearance: "none", color: "var(--muted)" }} onFocus={onF} onBlur={onB}
+            <select name="service" defaultValue="" style={{ ...inputStyle, appearance: "none", color: "var(--muted)" }} onFocus={onF} onBlur={onB}
               onChange={(e) => { e.currentTarget.style.color = e.currentTarget.value ? "var(--ink)" : "var(--muted)"; }}>
               <option value="" disabled>Select a service</option>
-              <option value="marketing">Marketing & Advertising</option>
-              <option value="ai">AI Reels & Content Creation</option>
-              <option value="digital">Digital Transformation</option>
-              <option value="logistics">Logistics & Engineering</option>
-              <option value="multiple">Multiple Services</option>
+              <option value="Marketing & Advertising">Marketing & Advertising</option>
+              <option value="AI Reels & Content Creation">AI Reels & Content Creation</option>
+              <option value="Digital Transformation">Digital Transformation</option>
+              <option value="Logistics & Engineering">Logistics & Engineering</option>
+              <option value="Multiple Services">Multiple Services</option>
             </select>
           </div>
           <div>
             <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Project Description</label>
-            <textarea placeholder="Tell us about your project..." rows={5} style={{ ...inputStyle, resize: "none" }} onFocus={onF} onBlur={onB} />
+            <textarea name="message" placeholder="Tell us about your project..." rows={5} style={{ ...inputStyle, resize: "none" }} onFocus={onF} onBlur={onB} />
           </div>
-          <button type="submit" className="uppercase transition-all duration-200"
-            style={{ width: "100%", padding: "14px", borderRadius: 4, fontSize: 13, fontWeight: 500, letterSpacing: "0.06em", background: "var(--ink)", color: "var(--cream)", border: "none", cursor: "pointer" }}
-            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "var(--ink2)"; el.style.transform = "translateY(-2px)"; }}
+
+          <button type="submit" disabled={status === "sending"} className="uppercase transition-all duration-200"
+            style={{ width: "100%", padding: "14px", borderRadius: 4, fontSize: 13, fontWeight: 500, letterSpacing: "0.06em", background: "var(--ink)", color: "var(--cream)", border: "none", cursor: status === "sending" ? "wait" : "pointer", opacity: status === "sending" ? 0.7 : 1 }}
+            onMouseEnter={(e) => { if (status !== "sending") { const el = e.currentTarget as HTMLElement; el.style.background = "var(--ink2)"; el.style.transform = "translateY(-2px)"; } }}
             onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "var(--ink)"; el.style.transform = "translateY(0)"; }}>
-            Send Message
+            {status === "sending" ? "Sending..." : status === "sent" ? "Message Sent!" : "Send Message"}
           </button>
+
+          {status === "sent" && (
+            <p style={{ fontSize: 14, color: "var(--ink3)", textAlign: "center", marginTop: 4 }}>
+              Thank you! We&apos;ll be in touch shortly.
+            </p>
+          )}
+          {status === "error" && (
+            <p style={{ fontSize: 14, color: "#B44", textAlign: "center", marginTop: 4 }}>
+              Something went wrong. Please try again or email us directly.
+            </p>
+          )}
         </form>
       </div>
     </section>
