@@ -1,116 +1,79 @@
 "use client";
 
+import { useEffect } from "react";
+
 const services = [
-  {
-    icon: "📣", number: "01",
-    title: "Marketing & Advertising",
-    description: "Full-funnel marketing strategies that combine data-driven paid media, organic growth, and brand positioning to capture market share and drive measurable ROI.",
-    tags: ["Social Media", "Paid Ads", "Traditional Media", "Brand Strategy", "SEO/SEM"],
-  },
-  {
-    icon: "🎬", number: "02",
-    title: "AI Reels & Content Creation",
-    description: "Next-gen content production powered by AI tools — from viral short-form video to brand storytelling that scales output without sacrificing quality.",
-    tags: ["AI Video", "Reels & Shorts", "Brand Films", "Content Strategy"],
-  },
-  {
-    icon: "⚡", number: "03",
-    title: "Digital Transformation",
-    description: "End-to-end technology modernization — from legacy system migration and cloud infrastructure to custom software engineering and agile delivery.",
-    tags: ["SDLC", "Data Migration", "Cloud Infra", "Software Engineering", "Agile"],
-  },
-  {
-    icon: "🏗️", number: "04",
-    title: "Logistics & Engineering",
-    description: "Operational excellence through optimized supply chains, engineering planning, and process design that reduces costs and improves delivery timelines.",
-    tags: ["Supply Chain", "Operations", "Engineering Planning", "Process Design"],
-  },
+  { num: "01", title: "Marketing & Advertising", desc: "Full-funnel marketing strategies that combine data-driven paid media, organic growth, and brand positioning to capture market share and drive measurable ROI.", tags: ["Social Media", "Paid Ads", "Traditional Media", "Brand Strategy", "SEO/SEM"] },
+  { num: "02", title: "AI Reels & Content Creation", desc: "Next-gen content production powered by AI tools — from viral short-form video to brand storytelling that scales output without sacrificing quality.", tags: ["AI Video", "Reels & Shorts", "Brand Films", "Content Strategy"] },
+  { num: "03", title: "Digital Transformation", desc: "End-to-end technology modernization — from legacy system migration and cloud infrastructure to custom software engineering and agile delivery.", tags: ["SDLC", "Data Migration", "Cloud Infra", "Software Engineering", "Agile"] },
+  { num: "04", title: "Logistics & Engineering", desc: "Operational excellence through optimized supply chains, engineering planning, and process design that reduces costs and improves delivery timelines.", tags: ["Supply Chain", "Operations", "Engineering Planning", "Process Design"] },
 ];
 
 export default function Services() {
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); } }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll(".svc-reveal").forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <section id="services" className="section-desktop" style={{ padding: "120px 48px", background: "var(--bg)" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <section id="services" style={{ background: "var(--cream2)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "120px 60px" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between" style={{ marginBottom: 72, gap: 24 }}>
-          <div style={{ maxWidth: 600 }}>
-            <div className="flex items-center gap-4" style={{ marginBottom: 24 }}>
-              <div style={{ width: 28, height: 2, background: "var(--cyan)", borderRadius: 1 }} />
-              <span className="uppercase font-semibold font-body" style={{ fontSize: 11, letterSpacing: "0.16em", color: "var(--cyan)" }}>What We Do</span>
-            </div>
-            <h2 className="font-heading" style={{ fontSize: "clamp(36px, 4.5vw, 60px)", fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1.08, color: "var(--text)" }}>
-              Full-Spectrum <span style={{ color: "var(--cyan)" }}>Expertise</span> Under One Roof
-            </h2>
+        <div className="svc-reveal reveal" style={{ marginBottom: 64, maxWidth: 640 }}>
+          <div className="flex items-center gap-4" style={{ marginBottom: 24 }}>
+            <div style={{ width: 28, height: 1, background: "var(--muted2)" }} />
+            <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "var(--muted)" }}>What We Do</span>
           </div>
-          <p className="font-light font-body" style={{ fontSize: 16, lineHeight: 1.85, color: "var(--text-sub)", maxWidth: 420 }}>
+          <h2 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(44px, 5.5vw, 72px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.05, color: "var(--ink)" }}>
+            Full-Spectrum <em style={{ color: "var(--ink3)" }}>Expertise</em> Under One Roof
+          </h2>
+          <p className="font-light" style={{ fontSize: 16, lineHeight: 1.85, color: "var(--muted)", marginTop: 20 }}>
             We bring together the disciplines that drive growth — strategy, creative, technology, and operations.
           </p>
         </div>
 
-        {/* Cards — staggered layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: 20 }}>
+        {/* Service rows */}
+        <div>
           {services.map((s, i) => (
             <div
-              key={s.title}
-              className="group relative flex flex-col transition-all duration-300"
-              style={{
-                background: "var(--bg2)",
-                border: "1px solid var(--border)",
-                borderRadius: 16,
-                padding: "48px 44px",
-                marginTop: i % 2 === 1 ? 40 : 0,
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "var(--bg3)";
-                (e.currentTarget as HTMLElement).style.borderColor = "var(--border-light)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "var(--bg2)";
-                (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
-              }}
+              key={s.num}
+              className={`service-row svc-reveal reveal reveal-delay-${i + 1} group flex items-start gap-8 lg:gap-12 relative transition-all duration-300`}
+              style={{ padding: "40px 0", borderBottom: "1px solid var(--border)" }}
             >
-              {/* Hover accent */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"
-                style={{ background: "linear-gradient(to right, var(--cyan), transparent)", borderRadius: "16px 16px 0 0" }} />
+              {/* Hover sweep line */}
+              <div className="absolute bottom-0 left-0 right-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" style={{ height: 1, background: "var(--ink)" }} />
 
-              {/* Number watermark */}
-              <span className="absolute top-6 right-8 font-heading select-none pointer-events-none"
-                style={{ fontSize: 88, fontWeight: 700, color: "rgba(255,255,255,0.025)", lineHeight: 1 }}>
-                {s.number}
+              {/* Number */}
+              <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 18, fontStyle: "italic", color: "var(--muted2)", minWidth: 32, paddingTop: 8 }}>
+                {s.num}
               </span>
 
-              <div className="flex items-start justify-between" style={{ marginBottom: 32 }}>
-                <div className="flex items-center justify-center" style={{
-                  width: 56, height: 56, borderRadius: 14, background: "var(--cyan-dim)", border: "1px solid var(--border-cyan)", fontSize: 24,
-                }}>
-                  {s.icon}
-                </div>
-                <div className="flex items-center justify-center transition-all duration-300"
-                  style={{ width: 38, height: 38, borderRadius: 10, border: "1px solid var(--border-light)", color: "var(--text-muted)", fontSize: 16 }}>
-                  <span className="group-hover:text-[var(--cyan)] transition-colors duration-300">↗</span>
+              {/* Content */}
+              <div className="flex-1">
+                <h3 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)", marginBottom: 12, lineHeight: 1.2 }}>
+                  {s.title}
+                </h3>
+                <p className="font-light" style={{ fontSize: 15, lineHeight: 1.85, color: "var(--muted)", marginBottom: 20, maxWidth: 560 }}>
+                  {s.desc}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {s.tags.map((tag) => (
+                    <span key={tag} className="uppercase group-hover:border-[var(--ink)] group-hover:text-[var(--ink)] transition-colors duration-300"
+                      style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.06em", color: "var(--muted)", border: "1px solid var(--border)", borderRadius: 2, padding: "4px 10px" }}>
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
 
-              <h3 className="font-heading" style={{ fontSize: 26, fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 1.2, color: "#FFFFFF", marginBottom: 16 }}>
-                {s.title}
-              </h3>
-
-              <p className="font-light font-body flex-1" style={{ fontSize: 15, lineHeight: 1.8, color: "var(--text-sub)", marginBottom: 32 }}>
-                {s.description}
-              </p>
-
-              <div style={{ height: 1, background: "var(--border)", marginBottom: 24 }} />
-
-              <div className="flex flex-wrap gap-2">
-                {s.tags.map((tag) => (
-                  <span key={tag} className="font-body" style={{
-                    fontSize: 11, fontWeight: 500, letterSpacing: "0.04em", color: "var(--cyan)",
-                    background: "var(--cyan-dim)", border: "1px solid var(--border-cyan)", borderRadius: 6, padding: "6px 14px",
-                  }}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              {/* Arrow */}
+              <span className="text-[var(--muted2)] group-hover:text-[var(--ink)] transition-all duration-300 group-hover:translate-x-[5px] group-hover:-translate-y-[5px] text-xl mt-2 shrink-0">
+                ↗
+              </span>
             </div>
           ))}
         </div>

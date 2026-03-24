@@ -1,5 +1,7 @@
 "use client";
 
+import AtomLogo from "@/components/logo/AtomLogo";
+
 const linkColumns = [
   { title: "Services", links: [
     { label: "Marketing", href: "#services" }, { label: "AI Content", href: "#services" },
@@ -17,59 +19,49 @@ const linkColumns = [
 
 export default function Footer() {
   return (
-    <footer className="footer-mobile" style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", padding: "0 48px" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        {/* Top */}
-        <div className="flex flex-col lg:flex-row lg:justify-between"
-          style={{ padding: "72px 0 56px", borderBottom: "1px solid var(--border)", gap: 56 }}>
-          <div style={{ maxWidth: 320 }}>
-            <div className="flex items-center gap-3" style={{ marginBottom: 20 }}>
-              <div className="flex items-center justify-center font-heading font-bold text-white"
-                style={{ width: 38, height: 38, borderRadius: 10, fontSize: 15, background: "linear-gradient(135deg, var(--cyan), var(--blue))" }}>
-                DD
-              </div>
-              <span className="font-heading" style={{ fontSize: 18, fontWeight: 600, color: "var(--text)" }}>
-                Digital <span style={{ color: "var(--cyan)" }}>Dynamics</span>
+    <footer style={{ background: "var(--ink)", padding: "0 60px" }}>
+      {/* Top */}
+      <div className="flex flex-col lg:flex-row lg:justify-between"
+        style={{ maxWidth: 1100, margin: "0 auto", padding: "72px 0 56px", borderBottom: "1px solid rgba(245,242,235,0.1)", gap: 56 }}>
+        <div style={{ maxWidth: 300 }}>
+          <div className="flex items-center gap-2" style={{ marginBottom: 16 }}>
+            <AtomLogo size={40} dark={true} />
+            <span className="uppercase" style={{ fontFamily: "var(--font-dm-sans)", fontSize: 14, fontWeight: 500, letterSpacing: "0.08em", color: "var(--cream)" }}>
+              Digital Dynamics
+            </span>
+          </div>
+          <p className="font-light" style={{ fontSize: 14, lineHeight: 1.75, color: "rgba(245,242,235,0.45)" }}>
+            Full-service consulting firm delivering marketing, AI content, digital transformation, and logistics solutions.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap" style={{ gap: 72 }}>
+          {linkColumns.map((col) => (
+            <div key={col.title}>
+              <span className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "rgba(245,242,235,0.35)", marginBottom: 20 }}>
+                {col.title}
               </span>
+              <ul className="flex flex-col gap-3">
+                {col.links.map((l) => (
+                  <li key={l.label}>
+                    <a href={l.href} className="font-light transition-colors duration-200"
+                      style={{ fontSize: 14, color: "rgba(245,242,235,0.5)", textDecoration: "none" }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--cream)"; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.5)"; }}>
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
-            <p className="font-light font-body" style={{ fontSize: 14, lineHeight: 1.75, color: "var(--text-muted)" }}>
-              Full-service consulting firm delivering marketing, AI content,
-              digital transformation, and logistics solutions that drive real growth.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap" style={{ gap: 72 }}>
-            {linkColumns.map((col) => (
-              <div key={col.title}>
-                <span className="font-heading block uppercase" style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.10em", color: "var(--text)", marginBottom: 22 }}>
-                  {col.title}
-                </span>
-                <ul className="flex flex-col gap-3.5">
-                  {col.links.map((link) => (
-                    <li key={link.label}>
-                      <a href={link.href} className="font-body transition-colors duration-200"
-                        style={{ fontSize: 14, color: "var(--text-muted)", textDecoration: "none" }}
-                        onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--cyan)"; }}
-                        onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}>
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
+      </div>
 
-        {/* Bottom */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center" style={{ padding: "28px 0", gap: 12 }}>
-          <span className="font-body" style={{ fontSize: 13, color: "var(--text-muted)" }}>
-            © {new Date().getFullYear()} Digital Dynamics Consultants Group. All rights reserved.
-          </span>
-          <span className="font-body" style={{ fontSize: 13, color: "var(--text-muted)" }}>
-            Built with purpose. Driven by results.
-          </span>
-        </div>
+      {/* Bottom */}
+      <div className="flex flex-col sm:flex-row sm:justify-between" style={{ maxWidth: 1100, margin: "0 auto", padding: "24px 0", gap: 12 }}>
+        <span style={{ fontSize: 12, color: "rgba(245,242,235,0.25)" }}>© {new Date().getFullYear()} Digital Dynamics Consultants Group. All rights reserved.</span>
+        <span style={{ fontSize: 12, color: "rgba(245,242,235,0.25)" }}>Built with purpose. Driven by results.</span>
       </div>
     </footer>
   );

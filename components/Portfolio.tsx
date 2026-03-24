@@ -1,90 +1,67 @@
 "use client";
 
-const caseStudies = [
-  {
-    category: "Marketing",
-    title: "Regional Retail Brand Scale-Up",
-    description: "Transformed a regional retail brand with integrated paid media and SEO strategy that drove explosive growth.",
-    result: "340", suffix: "%", resultLabel: "Increase in Qualified Leads",
-    gradient: "linear-gradient(135deg, rgba(0,212,255,0.12) 0%, rgba(37,99,235,0.08) 100%)",
-  },
-  {
-    category: "AI Content",
-    title: "AI-Powered Content Engine",
-    description: "Built an AI-powered content production pipeline that dramatically scaled output while maintaining brand consistency.",
-    result: "12", suffix: "×", resultLabel: "Content Output Increase",
-    gradient: "linear-gradient(135deg, rgba(37,99,235,0.12) 0%, rgba(0,212,255,0.06) 100%)",
-  },
-  {
-    category: "Digital Transformation",
-    title: "Enterprise Legacy Migration",
-    description: "Led a full enterprise legacy system migration to modern cloud infrastructure, cutting costs dramatically.",
-    result: "60", suffix: "%", resultLabel: "Reduction in Infra Costs",
-    gradient: "linear-gradient(135deg, rgba(0,212,255,0.08) 0%, rgba(37,99,235,0.12) 100%)",
-  },
+import { useEffect } from "react";
+
+const cases = [
+  { cat: "Marketing", title: "Regional Retail Brand Scale-Up", result: "340%", label: "Increase in Qualified Leads" },
+  { cat: "AI Content", title: "AI-Powered Content Engine", result: "12×", label: "Content Output Increase" },
+  { cat: "Digital Transformation", title: "Enterprise Legacy Migration", result: "60%", label: "Reduction in Infra Costs" },
 ];
 
 export default function Portfolio() {
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); } }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll(".port-reveal").forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <section id="portfolio" className="section-desktop" style={{ padding: "120px 48px", background: "var(--bg)" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+    <section id="portfolio" style={{ background: "var(--cream2)", borderTop: "1px solid var(--border)", padding: "120px 60px" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between" style={{ marginBottom: 72, gap: 24 }}>
-          <div style={{ maxWidth: 500 }}>
-            <div className="flex items-center gap-4" style={{ marginBottom: 24 }}>
-              <div style={{ width: 28, height: 2, background: "var(--cyan)", borderRadius: 1 }} />
-              <span className="uppercase font-semibold font-body" style={{ fontSize: 11, letterSpacing: "0.16em", color: "var(--cyan)" }}>Our Work</span>
-            </div>
-            <h2 className="font-heading" style={{ fontSize: "clamp(36px, 4.5vw, 60px)", fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1.08, color: "var(--text)" }}>
-              Results That Speak <span style={{ color: "var(--cyan)" }}>Louder</span>
-            </h2>
+        <div className="port-reveal reveal" style={{ marginBottom: 64, maxWidth: 640 }}>
+          <div className="flex items-center gap-4" style={{ marginBottom: 24 }}>
+            <div style={{ width: 28, height: 1, background: "var(--muted2)" }} />
+            <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "var(--muted)" }}>Our Work</span>
           </div>
-          <p className="font-light font-body" style={{ fontSize: 16, lineHeight: 1.85, color: "var(--text-sub)", maxWidth: 380 }}>
-            Real outcomes from real engagements. Here&apos;s how we&apos;ve helped our clients scale.
+          <h2 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(44px, 5.5vw, 72px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.05, color: "var(--ink)" }}>
+            Results That Speak <em style={{ color: "var(--ink3)" }}>Louder</em>
+          </h2>
+          <p className="font-light" style={{ fontSize: 16, lineHeight: 1.85, color: "var(--muted)", marginTop: 20 }}>
+            Real outcomes from real engagements.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3" style={{ gap: 20 }}>
-          {caseStudies.map((s) => (
+        {/* Rows */}
+        <div>
+          {cases.map((c, i) => (
             <div
-              key={s.title}
-              className="group relative flex flex-col transition-all duration-300 overflow-hidden"
-              style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderRadius: 16, padding: "44px 40px" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border-light)"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; }}
+              key={c.title}
+              className={`portfolio-row port-reveal reveal reveal-delay-${i + 1} group relative grid grid-cols-1 lg:grid-cols-[120px_1fr_180px] items-center gap-6 transition-all duration-300`}
+              style={{ padding: "36px 0", borderBottom: "1px solid var(--border)" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.paddingLeft = "16px"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.paddingLeft = "0px"; }}
             >
-              {/* Gradient wash on hover */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{ background: s.gradient }} />
+              {/* Hover sweep */}
+              <div className="absolute bottom-0 left-0 right-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" style={{ height: 1, background: "var(--ink)" }} />
 
-              {/* Hover accent line */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"
-                style={{ background: "var(--cyan)" }} />
+              {/* Category */}
+              <span className="uppercase" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: "var(--muted2)" }}>{c.cat}</span>
 
-              <div className="relative z-10 flex flex-col flex-1">
-                <div className="flex items-center justify-between" style={{ marginBottom: 28 }}>
-                  <span className="uppercase font-semibold font-body" style={{ fontSize: 10, letterSpacing: "0.15em", color: "var(--cyan)" }}>{s.category}</span>
-                  <div className="flex items-center justify-center transition-all duration-300"
-                    style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid var(--border-light)", color: "var(--text-muted)", fontSize: 14 }}>
-                    <span className="group-hover:text-[var(--cyan)] transition-colors duration-300">↗</span>
-                  </div>
-                </div>
+              {/* Title */}
+              <h3 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(22px, 2.8vw, 36px)", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)" }}>
+                {c.title}
+              </h3>
 
-                <h3 className="font-heading" style={{ fontSize: 22, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.3, color: "#FFFFFF", marginBottom: 14 }}>
-                  {s.title}
-                </h3>
-
-                <p className="font-light font-body flex-1" style={{ fontSize: 14, lineHeight: 1.8, color: "var(--text-sub)", marginBottom: 36 }}>
-                  {s.description}
-                </p>
-
-                <div style={{ borderTop: "1px solid var(--border)", paddingTop: 28 }}>
-                  <span className="font-heading" style={{ fontSize: 48, fontWeight: 700, letterSpacing: "-0.04em", color: "#FFFFFF" }}>
-                    {s.result}<span style={{ color: "var(--cyan)" }}>{s.suffix}</span>
-                  </span>
-                  <span className="block font-body" style={{ fontSize: 13, color: "var(--text-muted)", marginTop: 8 }}>{s.resultLabel}</span>
-                </div>
+              {/* Result */}
+              <div className="lg:text-right">
+                <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 48, fontWeight: 600, letterSpacing: "-0.03em", color: "var(--ink)", display: "block", lineHeight: 1 }}>
+                  {c.result}
+                </span>
+                <span className="block uppercase" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.06em", marginTop: 6 }}>{c.label}</span>
               </div>
             </div>
           ))}

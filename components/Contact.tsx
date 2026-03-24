@@ -1,128 +1,123 @@
 "use client";
 
+import { useEffect } from "react";
+
 const contactItems = [
-  { icon: "✉", title: "info@ddcg.net", subtitle: "Email Us" },
-  { icon: "📍", title: "Serving Clients Nationwide", subtitle: "Remote & On-Site" },
+  { icon: "✉", title: "info@ddcg.net", sub: "Email Us" },
+  { icon: "📍", title: "Jackson, MS — Serving Clients Nationwide", sub: "Location" },
 ];
 
-const inputBase: React.CSSProperties = {
-  width: "100%",
-  background: "var(--bg-light)",
-  border: "1px solid var(--border-dark)",
-  borderRadius: 10,
-  padding: "15px 18px",
-  fontSize: 15,
-  color: "var(--text-dark)",
-  outline: "none",
-  transition: "border-color 0.2s, box-shadow 0.2s",
+const inputStyle: React.CSSProperties = {
+  width: "100%", background: "var(--cream2)", border: "1px solid var(--border)", borderRadius: 3,
+  padding: "14px 18px", fontSize: 14, color: "var(--ink)", outline: "none", transition: "border-color 0.2s",
   fontFamily: "var(--font-dm-sans)",
 };
 
-function onF(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
-  e.currentTarget.style.borderColor = "var(--cyan-dark)";
-  e.currentTarget.style.boxShadow = "0 0 0 4px rgba(0,200,240,0.08)";
-}
-function onB(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) {
-  e.currentTarget.style.borderColor = "var(--border-dark)";
-  e.currentTarget.style.boxShadow = "none";
-}
+function onF(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) { e.currentTarget.style.borderColor = "var(--ink3)"; }
+function onB(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) { e.currentTarget.style.borderColor = "var(--border)"; }
 
 export default function Contact() {
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); } }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll(".contact-reveal").forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <section id="contact" className="section-desktop" style={{ background: "var(--bg-light)", padding: "140px 48px" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        {/* Top heading — full width */}
-        <div style={{ marginBottom: 72 }}>
-          <div className="flex items-center gap-4" style={{ marginBottom: 24 }}>
-            <div style={{ width: 28, height: 2, background: "var(--cyan-dark)", borderRadius: 1 }} />
-            <span className="uppercase font-semibold font-body" style={{ fontSize: 11, letterSpacing: "0.16em", color: "var(--cyan-dark)" }}>Get In Touch</span>
+    <section id="contact" className="relative overflow-hidden" style={{ background: "var(--cream)", borderTop: "1px solid var(--border)", padding: "120px 60px" }}>
+      {/* Ghost text */}
+      <div className="absolute pointer-events-none select-none hidden lg:block" style={{ bottom: "5%", right: "-2%", zIndex: 0 }}>
+        <span style={{
+          fontFamily: "var(--font-cormorant)", fontSize: "clamp(160px, 22vw, 300px)", fontWeight: 600, fontStyle: "italic",
+          color: "transparent", WebkitTextStroke: "1px rgba(28,28,22,0.04)", lineHeight: 1,
+        }}>Hello</span>
+      </div>
+
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2" style={{ maxWidth: 1100, margin: "0 auto", gap: 100 }}>
+        {/* LEFT */}
+        <div>
+          <div className="contact-reveal reveal flex items-center gap-4" style={{ marginBottom: 24 }}>
+            <div style={{ width: 28, height: 1, background: "var(--muted2)" }} />
+            <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "var(--muted)" }}>Get In Touch</span>
           </div>
-          <h2 className="font-heading" style={{
-            fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 700, letterSpacing: "-0.04em", lineHeight: 1.06, color: "var(--text-dark)",
+          <h2 className="contact-reveal reveal reveal-delay-1" style={{
+            fontFamily: "var(--font-cormorant)", fontSize: "clamp(36px, 4.5vw, 58px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.05, color: "var(--ink)", marginBottom: 20,
           }}>
-            Let&apos;s Build Something <span style={{ color: "var(--cyan-dark)" }}>Great.</span>
+            Let&apos;s Build Something <em style={{ color: "var(--ink3)" }}>Great.</em>
           </h2>
+          <p className="contact-reveal reveal reveal-delay-2 font-light" style={{ fontSize: 16, lineHeight: 1.9, color: "var(--muted)", marginBottom: 40 }}>
+            Ready to accelerate your growth? Our team is ready to deliver results.
+          </p>
+
+          {/* Contact items */}
+          <div className="contact-reveal reveal reveal-delay-3">
+            {contactItems.map((item, i) => (
+              <div key={item.sub} className="flex items-center transition-all duration-200"
+                style={{ gap: 18, padding: "22px 0", borderBottom: i === 0 ? "1px solid var(--border)" : "none" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.paddingLeft = "8px"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.paddingLeft = "0px"; }}
+              >
+                <div className="flex items-center justify-center shrink-0"
+                  style={{ width: 40, height: 40, borderRadius: 4, background: "var(--cream2)", border: "1px solid var(--border)", fontSize: 16 }}>
+                  {item.icon}
+                </div>
+                <div>
+                  <span className="block" style={{ fontSize: 15, fontWeight: 400, color: "var(--ink)" }}>{item.title}</span>
+                  <span className="block" style={{ fontSize: 12, color: "var(--muted)" }}>{item.sub}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5" style={{ gap: 48 }}>
-          {/* Left: info — 2 cols */}
-          <div className="lg:col-span-2">
-            <p className="font-light font-body" style={{ fontSize: 16, lineHeight: 1.85, color: "var(--text-dark-sub)", marginBottom: 36 }}>
-              Ready to accelerate your growth? Whether you need a full digital overhaul or a targeted campaign, our team is ready to deliver results.
-            </p>
-
-            <div style={{ border: "1px solid var(--border-dark)", borderRadius: 14, overflow: "hidden" }}>
-              {contactItems.map((item, i) => (
-                <div key={item.subtitle} className="flex items-center transition-colors duration-200"
-                  style={{ gap: 18, padding: "20px 24px", background: "var(--bg-white)", borderBottom: i === 0 ? "1px solid var(--border-dark)" : "none" }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--bg-cream)"; }}
-                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--bg-white)"; }}
-                >
-                  <div className="flex items-center justify-center shrink-0" style={{
-                    width: 44, height: 44, borderRadius: 12, background: "rgba(0,200,240,0.08)", border: "1px solid rgba(0,200,240,0.15)", fontSize: 18,
-                  }}>{item.icon}</div>
-                  <div>
-                    <span className="block font-body" style={{ fontSize: 15, fontWeight: 500, color: "var(--text-dark)" }}>{item.title}</span>
-                    <span className="block font-body" style={{ fontSize: 12, color: "var(--text-dark-muted)", marginTop: 2 }}>{item.subtitle}</span>
-                  </div>
-                </div>
-              ))}
+        {/* RIGHT — Form */}
+        <form onSubmit={(e) => e.preventDefault()} className="contact-reveal reveal reveal-delay-2 flex flex-col gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Name</label>
+              <input type="text" placeholder="Your name" required style={inputStyle} onFocus={onF} onBlur={onB} />
+            </div>
+            <div>
+              <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Company</label>
+              <input type="text" placeholder="Company name" style={inputStyle} onFocus={onF} onBlur={onB} />
             </div>
           </div>
-
-          {/* Right: form — 3 cols */}
-          <form onSubmit={(e) => e.preventDefault()} className="lg:col-span-3 flex flex-col gap-5"
-            style={{ background: "var(--bg-white)", border: "1px solid var(--border-dark)", borderRadius: 18, padding: "44px 40px" }}>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <label className="block uppercase font-semibold font-body" style={{ fontSize: 11, letterSpacing: "0.10em", color: "var(--text-dark-muted)", marginBottom: 8 }}>Name</label>
-                <input type="text" placeholder="Your name" required style={inputBase} onFocus={onF} onBlur={onB} />
-              </div>
-              <div>
-                <label className="block uppercase font-semibold font-body" style={{ fontSize: 11, letterSpacing: "0.10em", color: "var(--text-dark-muted)", marginBottom: 8 }}>Company</label>
-                <input type="text" placeholder="Company name" style={inputBase} onFocus={onF} onBlur={onB} />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <label className="block uppercase font-semibold font-body" style={{ fontSize: 11, letterSpacing: "0.10em", color: "var(--text-dark-muted)", marginBottom: 8 }}>Email</label>
-                <input type="email" placeholder="you@company.com" required style={inputBase} onFocus={onF} onBlur={onB} />
-              </div>
-              <div>
-                <label className="block uppercase font-semibold font-body" style={{ fontSize: 11, letterSpacing: "0.10em", color: "var(--text-dark-muted)", marginBottom: 8 }}>Phone</label>
-                <input type="tel" placeholder="(555) 000-0000" style={inputBase} onFocus={onF} onBlur={onB} />
-              </div>
-            </div>
-
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label className="block uppercase font-semibold font-body" style={{ fontSize: 11, letterSpacing: "0.10em", color: "var(--text-dark-muted)", marginBottom: 8 }}>Service Interest</label>
-              <select defaultValue="" style={{ ...inputBase, appearance: "none", color: "var(--text-dark-muted)" }}
-                onFocus={onF} onBlur={onB}
-                onChange={(e) => { e.currentTarget.style.color = e.currentTarget.value ? "var(--text-dark)" : "var(--text-dark-muted)"; }}>
-                <option value="" disabled>Select a service</option>
-                <option value="marketing">Marketing & Advertising</option>
-                <option value="ai-content">AI Reels & Content Creation</option>
-                <option value="digital">Digital Transformation</option>
-                <option value="logistics">Logistics & Engineering</option>
-                <option value="multiple">Multiple Services</option>
-              </select>
+              <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Email</label>
+              <input type="email" placeholder="you@company.com" required style={inputStyle} onFocus={onF} onBlur={onB} />
             </div>
-
             <div>
-              <label className="block uppercase font-semibold font-body" style={{ fontSize: 11, letterSpacing: "0.10em", color: "var(--text-dark-muted)", marginBottom: 8 }}>Project Description</label>
-              <textarea placeholder="Tell us about your project..." rows={5} style={{ ...inputBase, resize: "none" }} onFocus={onF} onBlur={onB} />
+              <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Phone</label>
+              <input type="tel" placeholder="(555) 000-0000" style={inputStyle} onFocus={onF} onBlur={onB} />
             </div>
-
-            <button type="submit" className="font-semibold font-body transition-all duration-200"
-              style={{ width: "100%", padding: 18, borderRadius: 10, fontSize: 15, background: "var(--cyan-dark)", color: "#FFFFFF", border: "none", cursor: "pointer", marginTop: 4 }}
-              onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.transform = "translateY(-2px)"; el.style.boxShadow = "0 8px 32px rgba(0,200,240,0.25)"; }}
-              onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.transform = "translateY(0)"; el.style.boxShadow = "none"; }}>
-              Send Message
-            </button>
-          </form>
-        </div>
+          </div>
+          <div>
+            <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Service Interest</label>
+            <select defaultValue="" style={{ ...inputStyle, appearance: "none", color: "var(--muted)" }} onFocus={onF} onBlur={onB}
+              onChange={(e) => { e.currentTarget.style.color = e.currentTarget.value ? "var(--ink)" : "var(--muted)"; }}>
+              <option value="" disabled>Select a service</option>
+              <option value="marketing">Marketing & Advertising</option>
+              <option value="ai">AI Reels & Content Creation</option>
+              <option value="digital">Digital Transformation</option>
+              <option value="logistics">Logistics & Engineering</option>
+              <option value="multiple">Multiple Services</option>
+            </select>
+          </div>
+          <div>
+            <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Project Description</label>
+            <textarea placeholder="Tell us about your project..." rows={5} style={{ ...inputStyle, resize: "none" }} onFocus={onF} onBlur={onB} />
+          </div>
+          <button type="submit" className="uppercase transition-all duration-200"
+            style={{ width: "100%", padding: "14px", borderRadius: 4, fontSize: 13, fontWeight: 500, letterSpacing: "0.06em", background: "var(--ink)", color: "var(--cream)", border: "none", cursor: "pointer" }}
+            onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "var(--ink2)"; el.style.transform = "translateY(-2px)"; }}
+            onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "var(--ink)"; el.style.transform = "translateY(0)"; }}>
+            Send Message
+          </button>
+        </form>
       </div>
     </section>
   );

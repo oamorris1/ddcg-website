@@ -1,99 +1,109 @@
 "use client";
 
-const pillars = [
-  { title: "Strategy-First Consulting", desc: "Every engagement begins with deep discovery and a tailored roadmap." },
-  { title: "Cross-Discipline Integration", desc: "Marketing, tech, and operations working as one unified team." },
-  { title: "Data-Driven Decision Making", desc: "Real metrics and analytics powering every recommendation." },
-  { title: "Scalable & Sustainable Growth", desc: "Solutions built to compound returns, not just hit quarterly targets." },
+import { useEffect, useRef } from "react";
+
+const metrics = [
+  { n: "8+", l: "Years" }, { n: "150+", l: "Clients" },
+  { n: "98%", l: "Retention" }, { n: "$40M+", l: "Revenue" },
+];
+
+const disciplines = [
+  "Marketing Strategy", "Paid Media & Advertising", "AI Content Production",
+  "Brand Development", "Software Engineering", "Cloud & Data Migration",
+  "Supply Chain Optimization", "Process Design & Engineering",
 ];
 
 export default function About() {
+  const ghostRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("visible"); obs.unobserve(e.target); } }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll(".about-reveal").forEach((el) => obs.observe(el));
+
+    const onScroll = () => {
+      if (ghostRef.current && sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        ghostRef.current.style.transform = `translateY(${-rect.top * 0.12}px)`;
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { obs.disconnect(); window.removeEventListener("scroll", onScroll); };
+  }, []);
+
   return (
-    <section id="about" className="section-desktop" style={{ background: "var(--bg-light)", padding: "140px 48px" }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        {/* Top: Big statement spanning full width */}
-        <div style={{ marginBottom: 80 }}>
-          <div className="flex items-center gap-4" style={{ marginBottom: 32 }}>
-            <div style={{ width: 28, height: 2, background: "var(--cyan-dark)", borderRadius: 1 }} />
-            <span className="uppercase font-semibold font-body" style={{ fontSize: 11, letterSpacing: "0.16em", color: "var(--cyan-dark)" }}>About DDCG</span>
+    <section ref={sectionRef} id="about" className="relative overflow-hidden"
+      style={{ background: "var(--ink)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", padding: "120px 60px" }}>
+
+      {/* Ghost text */}
+      <div ref={ghostRef} className="absolute pointer-events-none select-none hidden lg:block" style={{ top: "10%", right: "-5%", zIndex: 0 }}>
+        <span style={{
+          fontFamily: "var(--font-cormorant)", fontSize: "clamp(200px, 28vw, 380px)", fontWeight: 600, fontStyle: "italic",
+          color: "transparent", WebkitTextStroke: "1px rgba(245,242,235,0.05)", lineHeight: 1,
+        }}>DDCG</span>
+      </div>
+
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 items-start" style={{ maxWidth: 1100, margin: "0 auto", gap: 100 }}>
+        {/* LEFT */}
+        <div>
+          <div className="about-reveal reveal flex items-center gap-4" style={{ marginBottom: 24 }}>
+            <div style={{ width: 28, height: 1, background: "rgba(245,242,235,0.35)" }} />
+            <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "rgba(245,242,235,0.35)" }}>About DDCG</span>
           </div>
-          <h2 className="font-heading" style={{
-            fontSize: "clamp(44px, 6vw, 80px)", fontWeight: 700, letterSpacing: "-0.045em", lineHeight: 1.04, color: "var(--text-dark)",
+
+          <h2 className="about-reveal reveal reveal-delay-1" style={{
+            fontFamily: "var(--font-cormorant)", fontSize: "clamp(44px, 5.5vw, 72px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.05, color: "var(--cream)",
           }}>
-            Built by Experts.<br />
-            Driven by <span style={{ color: "var(--cyan-dark)" }}>Results.</span>
+            Built by Experts. Driven by <em style={{ color: "rgba(245,242,235,0.55)" }}>Results.</em>
           </h2>
-        </div>
 
-        {/* Two-column: copy left, metrics right */}
-        <div className="grid grid-cols-1 lg:grid-cols-2" style={{ gap: 80, marginBottom: 100 }}>
-          <div>
-            <p className="font-light font-body" style={{ fontSize: 17, lineHeight: 1.9, color: "var(--text-dark-sub)", marginBottom: 24 }}>
-              Digital Dynamics Consultants Group was founded on the belief that businesses
-              deserve truly excellent partners. We bring together specialists across
-              marketing, technology, engineering, and logistics — genuine expertise, not generalists filling seats.
-            </p>
-            <p className="font-light font-body" style={{ fontSize: 17, lineHeight: 1.9, color: "var(--text-dark-sub)" }}>
-              From building a startup&apos;s social presence to leading a Fortune 500
-              digital transformation, every engagement is senior-led. No templates. No shortcuts. Just results.
-            </p>
-          </div>
+          <p className="about-reveal reveal reveal-delay-2 font-light" style={{ fontSize: 16, lineHeight: 1.9, color: "rgba(245,242,235,0.55)", marginTop: 28 }}>
+            Digital Dynamics Consultants Group was founded on the belief that businesses deserve truly excellent partners. We bring together specialists across marketing, technology, engineering, and logistics.
+          </p>
+          <p className="about-reveal reveal reveal-delay-3 font-light" style={{ fontSize: 16, lineHeight: 1.9, color: "rgba(245,242,235,0.55)", marginTop: 16 }}>
+            Every engagement is senior-led. No templates. No shortcuts. Just results.
+          </p>
 
-          {/* Metrics — vertical list with big numbers */}
-          <div className="grid grid-cols-2" style={{ gap: 40 }}>
-            {[
-              { n: "8", s: "+", l: "Years of Excellence" },
-              { n: "150", s: "+", l: "Clients Served" },
-              { n: "98", s: "%", l: "Client Retention" },
-              { n: "$40", s: "M+", l: "Revenue Generated" },
-            ].map((m) => (
-              <div key={m.l}>
-                <span className="font-heading block" style={{ fontSize: 44, fontWeight: 700, letterSpacing: "-0.04em", color: "var(--text-dark)", lineHeight: 1 }}>
-                  {m.n}<span style={{ color: "var(--cyan-dark)" }}>{m.s}</span>
-                </span>
-                <span className="block font-body" style={{ fontSize: 13, color: "var(--text-dark-muted)", marginTop: 8 }}>{m.l}</span>
+          {/* Metrics */}
+          <div className="about-reveal reveal reveal-delay-4 grid grid-cols-2" style={{ marginTop: 48, gap: 1, background: "rgba(245,242,235,0.06)", borderRadius: 0 }}>
+            {metrics.map((m) => (
+              <div key={m.l} style={{ background: "rgba(245,242,235,0.03)", padding: "28px 32px" }}>
+                <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 40, fontWeight: 600, color: "var(--cream)", display: "block", lineHeight: 1 }}>{m.n}</span>
+                <span className="block" style={{ fontSize: 12, color: "rgba(245,242,235,0.4)", marginTop: 8, textTransform: "uppercase", letterSpacing: "0.06em" }}>{m.l}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Pillars — horizontal cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4" style={{ gap: 16 }}>
-          {pillars.map((p, i) => (
-            <div
-              key={p.title}
-              className="transition-all duration-300"
-              style={{
-                background: "var(--bg-white)",
-                border: "1px solid var(--border-dark)",
-                borderRadius: 14,
-                padding: "32px 28px",
-                borderTop: i === 0 ? "3px solid var(--cyan-dark)" : "1px solid var(--border-dark)",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "var(--bg-cream)";
-                (e.currentTarget as HTMLElement).style.borderTopColor = "var(--cyan-dark)";
-                (e.currentTarget as HTMLElement).style.borderTopWidth = "3px";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.background = "var(--bg-white)";
-                if (i !== 0) {
-                  (e.currentTarget as HTMLElement).style.borderTopColor = "var(--border-dark)";
-                  (e.currentTarget as HTMLElement).style.borderTopWidth = "1px";
-                }
-              }}
-            >
-              <span className="block font-body" style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.06em", color: "var(--cyan-dark)", marginBottom: 14 }}>
-                0{i + 1}
-              </span>
-              <h4 className="font-heading" style={{ fontSize: 17, fontWeight: 600, color: "var(--text-dark)", marginBottom: 10, lineHeight: 1.3 }}>
-                {p.title}
-              </h4>
-              <p className="font-body font-light" style={{ fontSize: 14, lineHeight: 1.7, color: "var(--text-dark-muted)" }}>
-                {p.desc}
-              </p>
-            </div>
-          ))}
+        {/* RIGHT — Disciplines */}
+        <div>
+          <div className="about-reveal reveal flex items-center gap-4" style={{ marginBottom: 32 }}>
+            <div style={{ width: 28, height: 1, background: "rgba(245,242,235,0.35)" }} />
+            <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "rgba(245,242,235,0.35)" }}>Our Disciplines</span>
+          </div>
+
+          <div>
+            {disciplines.map((d, i) => (
+              <div key={d}
+                className={`pillar about-reveal reveal reveal-delay-${(i % 4) + 1} flex items-center transition-all duration-300`}
+                style={{ gap: 18, padding: "18px 0", borderBottom: "1px solid rgba(245,242,235,0.06)", color: "rgba(245,242,235,0.5)" }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.paddingLeft = "8px";
+                  (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.85)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.paddingLeft = "0px";
+                  (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.5)";
+                }}
+              >
+                <span className="shrink-0" style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(245,242,235,0.3)" }} />
+                <span style={{ fontSize: 15, fontWeight: 400 }}>{d}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
