@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 
 const contactItems = [
   { icon: "✉", title: "info@ddcg.net", sub: "Email Us" },
-  { icon: "📍", title: "Jackson, MS — Serving Clients Nationwide", sub: "Location" },
+  { icon: "📍", title: "Houston, TX — Serving Clients Worldwide", sub: "Location" },
 ];
 
 const inputStyle: React.CSSProperties = {

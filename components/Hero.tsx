@@ -120,7 +120,7 @@ export default function Hero() {
         {/* Est. label */}
         <div style={{ marginTop: 64 }}>
           <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 14, fontStyle: "italic", color: "var(--muted2)" }}>
-            Est. 2024 — Jackson, MS
+            Est. 2024 — Houston, TX
           </span>
         </div>
       </div>
