@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-next-app@14 . --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
+      "Read(//c/Users/oamorris1/Desktop/**)",
+      "Bash(npx create-next-app@14 ddcg_temp --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
+      "Bash(npx --yes create-next-app@14 ddcg_temp --typescript --tailwind --eslint --app --no-src-dir --import-alias=\"@/*\" --use-npm)",
+      "Bash(cp -r \"C:/Users/oamorris1/Desktop/ddcg_temp/\"* \"C:/Users/oamorris1/Desktop/ddcg_website/\")",
+      "Bash(cp \"C:/Users/oamorris1/Desktop/ddcg_temp/.eslintrc.json\" \"C:/Users/oamorris1/Desktop/ddcg_temp/.gitignore\" \"C:/Users/oamorris1/Desktop/ddcg_website/\")",
+      "Bash(rm -rf \"C:/Users/oamorris1/Desktop/ddcg_temp\")",
+      "Bash(npm run:*)",
+      "Bash(netstat -ano)",
+      "Bash(cd:*)",
+      "WebFetch(domain:www.squarespace.com)",
+      "WebFetch(domain:www.awwwards.com)",
+      "Bash(npm install:*)",
+      "Bash(curl -s -X POST https://ddcg-website-tau.vercel.app/api/contact -H \"Content-Type: application/json\" -d '{\"\"name\"\":\"\"Test\"\",\"\"email\"\":\"\"test@test.com\"\",\"\"message\"\":\"\"test\"\"}')",
+      "Bash(npx vercel:*)",
+      "Bash(gh api:*)",
+      "Bash(curl -s -H \"Accept: application/vnd.github.v3+json\" \"https://api.github.com/repos/oamorris1/ddcg-website/contents/app/api/contact?ref=version-b\")",
+      "Bash(curl:*)",
+      "WebFetch(domain:www.shopify.com)"
+    ]
+  }
+}

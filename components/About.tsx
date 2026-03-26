@@ -17,12 +17,19 @@ const disciplines = [
 export default function About() {
   const ghostRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
       if (ghostRef.current && sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
         ghostRef.current.style.transform = `translateY(${-rect.top * 0.12}px)`;
+      }
+      // Parallax on image
+      if (imgRef.current && sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const progress = Math.max(0, Math.min(1, 1 - rect.top / window.innerHeight));
+        imgRef.current.style.transform = `scale(${1 + progress * 0.08}) translateY(${-progress * 20}px)`;
       }
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -42,18 +49,19 @@ export default function About() {
       </div>
 
       <div className="relative z-10" style={{ maxWidth: 1200, margin: "0 auto" }}>
-        {/* Top: Image + heading side by side */}
+        {/* Top: Image + heading */}
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center" style={{ gap: 80, marginBottom: 80 }}>
-          {/* Left — Image */}
-          <div className="img-reveal overflow-hidden" style={{ borderRadius: 16 }}>
-            <Image
-              src="/img/about.png"
-              alt="Strategic chess move — deliberate, calculated, powerful"
-              width={600}
-              height={400}
-              className="w-full h-auto object-cover"
-              style={{ borderRadius: 16 }}
-            />
+          {/* Left — Image with parallax */}
+          <div className="overflow-hidden" style={{ borderRadius: 20 }}>
+            <div ref={imgRef} style={{ willChange: "transform", transition: "transform 0.1s linear" }}>
+              <Image
+                src="/img/about.png"
+                alt="Strategic chess move — deliberate, calculated, powerful"
+                width={600} height={400}
+                className="w-full h-auto object-cover img-reveal"
+                style={{ borderRadius: 20 }}
+              />
+            </div>
           </div>
 
           {/* Right — Statement */}
@@ -72,7 +80,6 @@ export default function About() {
 
         {/* Bottom: Copy + Metrics left, Disciplines right */}
         <div className="grid grid-cols-1 lg:grid-cols-2 items-start" style={{ gap: 100 }}>
-          {/* Left */}
           <div>
             <p className="reveal font-light" style={{ fontSize: 16, lineHeight: 1.9, color: "rgba(245,242,235,0.55)", marginBottom: 16 }}>
               Digital Dynamics Consultants Group was founded on the belief that businesses deserve truly excellent partners. We bring together specialists across marketing, technology, engineering, and logistics.
@@ -81,7 +88,6 @@ export default function About() {
               Every engagement is senior-led. No templates. No shortcuts. Just results.
             </p>
 
-            {/* Metrics */}
             <div className="reveal reveal-delay-2 grid grid-cols-2" style={{ gap: 1, background: "rgba(245,242,235,0.06)", borderRadius: 12, overflow: "hidden" }}>
               {metrics.map((m) => (
                 <div key={m.l} style={{ background: "rgba(245,242,235,0.03)", padding: "28px 32px" }}>
@@ -92,32 +98,29 @@ export default function About() {
             </div>
           </div>
 
-          {/* Right — Disciplines */}
           <div>
             <div className="reveal flex items-center gap-4" style={{ marginBottom: 32 }}>
               <div style={{ width: 28, height: 1, background: "rgba(245,242,235,0.35)" }} />
               <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "rgba(245,242,235,0.35)" }}>Our Disciplines</span>
             </div>
 
-            <div>
-              {disciplines.map((d, i) => (
-                <div key={d}
-                  className={`pillar reveal reveal-delay-${(i % 4) + 1} flex items-center transition-all duration-300`}
-                  style={{ gap: 18, padding: "18px 0", borderBottom: "1px solid rgba(245,242,235,0.06)", color: "rgba(245,242,235,0.5)" }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.paddingLeft = "8px";
-                    (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.85)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.paddingLeft = "0px";
-                    (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.5)";
-                  }}
-                >
-                  <span className="shrink-0" style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(245,242,235,0.3)" }} />
-                  <span style={{ fontSize: 15, fontWeight: 400 }}>{d}</span>
-                </div>
-              ))}
-            </div>
+            {disciplines.map((d, i) => (
+              <div key={d}
+                className={`pillar reveal reveal-delay-${(i % 4) + 1} flex items-center transition-all duration-300`}
+                style={{ gap: 18, padding: "18px 0", borderBottom: "1px solid rgba(245,242,235,0.06)", color: "rgba(245,242,235,0.5)" }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.paddingLeft = "8px";
+                  (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.85)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.paddingLeft = "0px";
+                  (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.5)";
+                }}
+              >
+                <span className="shrink-0" style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(245,242,235,0.3)" }} />
+                <span style={{ fontSize: 15, fontWeight: 400 }}>{d}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
