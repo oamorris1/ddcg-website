@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 export default function Hero() {
   const ghostRef = useRef<HTMLDivElement>(null);
@@ -18,7 +19,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative flex flex-col justify-center overflow-hidden" style={{ minHeight: "100vh", padding: "100px 60px 80px" }}>
+    <section className="relative flex flex-col justify-center overflow-hidden hero-mobile" style={{ minHeight: "100vh", padding: "100px 60px 0" }}>
       {/* Grid overlay */}
       <div className="absolute inset-0 pointer-events-none" style={{
         backgroundImage: "linear-gradient(rgba(28,28,22,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(28,28,22,0.03) 1px, transparent 1px)",
@@ -27,26 +28,18 @@ export default function Hero() {
         WebkitMaskImage: "radial-gradient(ellipse 70% 55% at 50% 45%, black 10%, transparent 80%)",
       }} />
 
-      {/* Radial orb */}
-      <div className="absolute pointer-events-none" style={{ top: "-10%", right: "-8%", width: 600, height: 600, background: "radial-gradient(circle, rgba(28,28,22,0.03) 0%, transparent 60%)" }} />
-
       {/* Ghost text */}
-      <div ref={ghostRef} className="absolute pointer-events-none select-none w-full text-center" style={{ top: "18%", zIndex: 0 }}>
+      <div ref={ghostRef} className="absolute pointer-events-none select-none w-full text-center" style={{ top: "15%", zIndex: 0 }}>
         <span style={{
-          fontFamily: "var(--font-cormorant)",
-          fontSize: "clamp(160px, 24vw, 320px)",
-          fontWeight: 600,
-          fontStyle: "italic",
-          color: "transparent",
-          WebkitTextStroke: "1px rgba(28,28,22,0.06)",
-          lineHeight: 1,
+          fontFamily: "var(--font-cormorant)", fontSize: "clamp(140px, 22vw, 280px)", fontWeight: 600, fontStyle: "italic",
+          color: "transparent", WebkitTextStroke: "1px rgba(28,28,22,0.05)", lineHeight: 1,
         }}>
           Dynamics
         </span>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full" style={{ maxWidth: 1100, margin: "0 auto" }}>
+      <div className="relative z-10 w-full" style={{ maxWidth: 1200, margin: "0 auto" }}>
         {/* Eyebrow */}
         <div className="flex items-center gap-4" style={{
           marginBottom: 40,
@@ -56,28 +49,23 @@ export default function Hero() {
         }}>
           <div style={{ width: 28, height: 1, background: "var(--muted2)" }} />
           <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "var(--muted)" }}>
-            Full-Service Digital &amp; Technology Consultants
+            Welcome to the Renaissance of Business-Focused Transformations
           </span>
         </div>
 
         {/* H1 */}
-        <h1 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(64px, 9vw, 120px)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 0.95 }}>
+        <h1 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(56px, 8.5vw, 112px)", fontWeight: 600, letterSpacing: "-0.03em", lineHeight: 0.95 }}>
           {[
             { text: "Scale Faster.", delay: "0.5s", color: "var(--ink)", italic: false },
             { text: "Build Smarter.", delay: "0.65s", color: "var(--ink3)", italic: true },
             { text: "Lead the Market.", delay: "0.8s", color: "var(--ink)", italic: false },
           ].map((line) => (
             <span key={line.text} className="block overflow-hidden">
-              <span
-                className="block"
-                style={{
-                  color: line.color,
-                  fontStyle: line.italic ? "italic" : "normal",
-                  animation: mounted ? `lineUp 1s ease both` : "none",
-                  animationDelay: line.delay,
-                  opacity: mounted ? undefined : 0,
-                }}
-              >
+              <span className="block" style={{
+                color: line.color, fontStyle: line.italic ? "italic" : "normal",
+                animation: mounted ? "lineUp 1s ease both" : "none", animationDelay: line.delay,
+                opacity: mounted ? undefined : 0,
+              }}>
                 {line.text}
               </span>
             </span>
@@ -85,22 +73,16 @@ export default function Hero() {
         </h1>
 
         {/* Bottom row */}
-        <div
-          className="flex flex-col lg:flex-row lg:items-end lg:justify-between"
-          style={{
-            marginTop: 48,
-            gap: 40,
-            animation: mounted ? "fadeUp 1s ease both" : "none",
-            animationDelay: "1.0s",
-            opacity: mounted ? undefined : 0,
-          }}
-        >
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between" style={{
+          marginTop: 48, gap: 40,
+          animation: mounted ? "fadeUp 1s ease both" : "none", animationDelay: "1.0s",
+          opacity: mounted ? undefined : 0,
+        }}>
           <p className="font-light" style={{ fontSize: 16, lineHeight: 1.85, color: "var(--muted)", maxWidth: 440 }}>
             Digital Dynamics Consultants Group delivers end-to-end solutions — from
             AI-powered content and aggressive marketing to enterprise-grade tech
             transformation and logistics optimization.
           </p>
-
           <div className="flex items-center gap-4 shrink-0">
             <a href="#contact" className="inline-flex items-center justify-center uppercase transition-all duration-200"
               style={{ padding: "14px 32px", borderRadius: 4, fontSize: 13, fontWeight: 500, letterSpacing: "0.04em", background: "var(--ink)", color: "var(--cream)" }}
@@ -116,13 +98,35 @@ export default function Hero() {
             </a>
           </div>
         </div>
+      </div>
 
-        {/* Est. label */}
-        <div style={{ marginTop: 64 }}>
-          <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 14, fontStyle: "italic", color: "var(--muted2)" }}>
-            Est. 2024 — Houston, TX
-          </span>
+      {/* Hero image — full bleed */}
+      <div className="relative z-10 w-full overflow-hidden" style={{
+        marginTop: 72, borderRadius: "16px 16px 0 0",
+        maxWidth: 1200, marginLeft: "auto", marginRight: "auto",
+        animation: mounted ? "fadeIn 1.4s ease both" : "none", animationDelay: "1.2s",
+        opacity: mounted ? undefined : 0,
+      }}>
+        <div className="img-reveal visible">
+          <Image
+            src="/img/hero.png"
+            alt="Renaissance-inspired scene — the spark of digital transformation"
+            width={1200}
+            height={600}
+            className="w-full h-auto object-cover"
+            style={{ borderRadius: "16px 16px 0 0" }}
+            priority
+          />
         </div>
+        {/* Gradient fade at bottom */}
+        <div className="absolute bottom-0 left-0 right-0" style={{ height: 120, background: "linear-gradient(to top, var(--cream), transparent)" }} />
+      </div>
+
+      {/* Est. label */}
+      <div className="relative z-10" style={{ maxWidth: 1200, margin: "0 auto", padding: "16px 0 24px" }}>
+        <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 14, fontStyle: "italic", color: "var(--muted2)" }}>
+          Est. 2024 — Houston, TX
+        </span>
       </div>
     </section>
   );
