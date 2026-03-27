@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 
 const metrics = [
@@ -14,6 +15,17 @@ const disciplines = [
   "Supply Chain Optimization", "Process Design & Engineering",
 ];
 
+function MotionBlock({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-10%" });
+  return (
+    <motion.div ref={ref} initial={{ opacity: 0, y: 35 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}>
+      {children}
+    </motion.div>
+  );
+}
+
 export default function About() {
   const ghostRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -25,7 +37,6 @@ export default function About() {
         const rect = sectionRef.current.getBoundingClientRect();
         ghostRef.current.style.transform = `translateY(${-rect.top * 0.12}px)`;
       }
-      // Parallax on image
       if (imgRef.current && sectionRef.current) {
         const rect = sectionRef.current.getBoundingClientRect();
         const progress = Math.max(0, Math.min(1, 1 - rect.top / window.innerHeight));
@@ -51,75 +62,85 @@ export default function About() {
       <div className="relative z-10" style={{ maxWidth: 1200, margin: "0 auto" }}>
         {/* Top: Image + heading */}
         <div className="grid grid-cols-1 lg:grid-cols-2 items-center" style={{ gap: 80, marginBottom: 80 }}>
-          {/* Left — Image with parallax */}
-          <div className="overflow-hidden" style={{ borderRadius: 20 }}>
-            <div ref={imgRef} style={{ willChange: "transform", transition: "transform 0.1s linear" }}>
-              <Image
-                src="/img/about.png"
-                alt="Strategic chess move — deliberate, calculated, powerful"
-                width={600} height={400}
-                className="w-full h-auto object-cover img-reveal"
-                style={{ borderRadius: 20 }}
-              />
+          <MotionBlock>
+            <div className="overflow-hidden" style={{ borderRadius: 20 }}>
+              <div ref={imgRef} style={{ willChange: "transform", transition: "transform 0.1s linear" }}>
+                <Image src="/img/about.png" alt="Strategic chess move" width={600} height={400}
+                  className="w-full h-auto object-cover" style={{ borderRadius: 20 }} />
+              </div>
             </div>
-          </div>
+          </MotionBlock>
 
-          {/* Right — Statement */}
           <div>
-            <div className="reveal flex items-center gap-4" style={{ marginBottom: 24 }}>
-              <div style={{ width: 28, height: 1, background: "rgba(245,242,235,0.35)" }} />
-              <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "rgba(245,242,235,0.35)" }}>About DDCG</span>
-            </div>
-            <h2 className="reveal reveal-delay-1" style={{
-              fontFamily: "var(--font-cormorant)", fontSize: "clamp(44px, 5.5vw, 72px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.05, color: "var(--cream)",
-            }}>
-              Built by Experts. Driven by <em style={{ color: "rgba(245,242,235,0.55)" }}>Results.</em>
-            </h2>
+            <MotionBlock delay={0.1}>
+              <div className="flex items-center gap-4" style={{ marginBottom: 24 }}>
+                <div style={{ width: 28, height: 1, background: "rgba(245,242,235,0.35)" }} />
+                <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "rgba(245,242,235,0.35)" }}>About DDCG</span>
+              </div>
+            </MotionBlock>
+            <MotionBlock delay={0.2}>
+              <h2 style={{
+                fontFamily: "var(--font-cormorant)", fontSize: "clamp(44px, 5.5vw, 72px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.05, color: "var(--cream)",
+              }}>
+                Built by Experts. Driven by <em style={{ color: "rgba(245,242,235,0.55)" }}>Results.</em>
+              </h2>
+            </MotionBlock>
           </div>
         </div>
 
         {/* Bottom: Copy + Metrics left, Disciplines right */}
         <div className="grid grid-cols-1 lg:grid-cols-2 items-start" style={{ gap: 100 }}>
           <div>
-            <p className="reveal font-light" style={{ fontSize: 16, lineHeight: 1.9, color: "rgba(245,242,235,0.55)", marginBottom: 16 }}>
-              Digital Dynamics Consultants Group was founded on the belief that businesses deserve truly excellent partners. We bring together specialists across marketing, technology, engineering, and logistics.
-            </p>
-            <p className="reveal reveal-delay-1 font-light" style={{ fontSize: 16, lineHeight: 1.9, color: "rgba(245,242,235,0.55)", marginBottom: 48 }}>
-              Every engagement is senior-led. No templates. No shortcuts. Just results.
-            </p>
+            <MotionBlock>
+              <p className="font-light" style={{ fontSize: 16, lineHeight: 1.9, color: "rgba(245,242,235,0.55)", marginBottom: 16 }}>
+                Digital Dynamics Consultants Group was founded on the belief that businesses deserve truly excellent partners. We bring together specialists across marketing, technology, engineering, and logistics.
+              </p>
+            </MotionBlock>
+            <MotionBlock delay={0.1}>
+              <p className="font-light" style={{ fontSize: 16, lineHeight: 1.9, color: "rgba(245,242,235,0.55)", marginBottom: 48 }}>
+                Every engagement is senior-led. No templates. No shortcuts. Just results.
+              </p>
+            </MotionBlock>
 
-            <div className="reveal reveal-delay-2 grid grid-cols-2" style={{ gap: 1, background: "rgba(245,242,235,0.06)", borderRadius: 12, overflow: "hidden" }}>
-              {metrics.map((m) => (
-                <div key={m.l} style={{ background: "rgba(245,242,235,0.03)", padding: "28px 32px" }}>
-                  <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 40, fontWeight: 600, color: "var(--cream)", display: "block", lineHeight: 1 }}>{m.n}</span>
-                  <span className="block uppercase" style={{ fontSize: 12, color: "rgba(245,242,235,0.4)", marginTop: 8, letterSpacing: "0.06em" }}>{m.l}</span>
-                </div>
+            {/* Metrics */}
+            <div className="grid grid-cols-2" style={{ gap: 1, background: "rgba(245,242,235,0.06)", borderRadius: 12, overflow: "hidden" }}>
+              {metrics.map((m, i) => (
+                <MotionBlock key={m.l} delay={0.15 + i * 0.1}>
+                  <div style={{ background: "rgba(245,242,235,0.03)", padding: "28px 32px" }}>
+                    <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 40, fontWeight: 600, color: "var(--cream)", display: "block", lineHeight: 1 }}>{m.n}</span>
+                    <span className="block uppercase" style={{ fontSize: 12, color: "rgba(245,242,235,0.4)", marginTop: 8, letterSpacing: "0.06em" }}>{m.l}</span>
+                  </div>
+                </MotionBlock>
               ))}
             </div>
           </div>
 
           <div>
-            <div className="reveal flex items-center gap-4" style={{ marginBottom: 32 }}>
-              <div style={{ width: 28, height: 1, background: "rgba(245,242,235,0.35)" }} />
-              <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "rgba(245,242,235,0.35)" }}>Our Disciplines</span>
-            </div>
+            <MotionBlock>
+              <div className="flex items-center gap-4" style={{ marginBottom: 32 }}>
+                <div style={{ width: 28, height: 1, background: "rgba(245,242,235,0.35)" }} />
+                <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "rgba(245,242,235,0.35)" }}>Our Disciplines</span>
+              </div>
+            </MotionBlock>
 
             {disciplines.map((d, i) => (
-              <div key={d}
-                className={`pillar reveal reveal-delay-${(i % 4) + 1} flex items-center transition-all duration-300`}
-                style={{ gap: 18, padding: "18px 0", borderBottom: "1px solid rgba(245,242,235,0.06)", color: "rgba(245,242,235,0.5)" }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLElement).style.paddingLeft = "8px";
-                  (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.85)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLElement).style.paddingLeft = "0px";
-                  (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.5)";
-                }}
-              >
-                <span className="shrink-0" style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(245,242,235,0.3)" }} />
-                <span style={{ fontSize: 15, fontWeight: 400 }}>{d}</span>
-              </div>
+              <MotionBlock key={d} delay={0.05 + i * 0.07}>
+                <div
+                  className="pillar flex items-center transition-all duration-300"
+                  style={{ gap: 18, padding: "18px 0", borderBottom: "1px solid rgba(245,242,235,0.06)", color: "rgba(245,242,235,0.5)" }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.paddingLeft = "8px";
+                    (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.85)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.paddingLeft = "0px";
+                    (e.currentTarget as HTMLElement).style.color = "rgba(245,242,235,0.5)";
+                  }}
+                >
+                  <span className="shrink-0" style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(245,242,235,0.3)" }} />
+                  <span style={{ fontSize: 15, fontWeight: 400 }}>{d}</span>
+                </div>
+              </MotionBlock>
             ))}
           </div>
         </div>

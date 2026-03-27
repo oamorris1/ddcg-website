@@ -19,7 +19,14 @@
       "Bash(gh api:*)",
       "Bash(curl -s -H \"Accept: application/vnd.github.v3+json\" \"https://api.github.com/repos/oamorris1/ddcg-website/contents/app/api/contact?ref=version-b\")",
       "Bash(curl:*)",
-      "WebFetch(domain:www.shopify.com)"
+      "WebFetch(domain:www.shopify.com)",
+      "Bash(ls -d C:/Users/oamorris1/Desktop/ddcg_website/images/bg_video/*/)",
+      "Bash(cp \"C:/Users/oamorris1/Desktop/ddcg_website/images/bg_video/svc-marketing/\"*.mp4 \"C:/Users/oamorris1/Desktop/ddcg_website/public/video/svc-marketing.mp4\")",
+      "Bash(cp \"C:/Users/oamorris1/Desktop/ddcg_website/images/bg_video/svc-ai-content/\"*.mp4 \"C:/Users/oamorris1/Desktop/ddcg_website/public/video/svc-ai-content.mp4\")",
+      "Bash(cp \"C:/Users/oamorris1/Desktop/ddcg_website/images/bg_video/svc-digital-transform/\"*.mp4 \"C:/Users/oamorris1/Desktop/ddcg_website/public/video/svc-digital-transform.mp4\")",
+      "Bash(cp \"C:/Users/oamorris1/Desktop/ddcg_website/images/bg_video/svc-logistics/\"*.mp4 \"C:/Users/oamorris1/Desktop/ddcg_website/public/video/svc-logistics.mp4\")",
+      "WebFetch(domain:www.youtube.com)",
+      "Bash(ls:*)"
     ]
   }
 }

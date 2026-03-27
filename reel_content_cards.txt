@@ -1,0 +1,58 @@
+
+
+Creating impressive web animations with Claude Code can be accomplished through an agile, agency-level workflow that combines AI image generation with a powerful web-based coding environment.
+The Workflow: AI Creative Agency Stack
+
+    Nano Banana 2 (via Higgsfield AI): Used to generate high-fidelity 16:9 4K base images and deconstructed versions of products for animation [01:41].
+
+    Claude Code (Web Version): Acts as the "developer" to turn static images into functional interactive web assets without needing a traditional coding environment [02:47].
+
+    GitHub: Serves as the repository where Claude Code stores, version-controls, and updates the website projects [02:51].
+
+Phase 1: Setting up Claude Code and GitHub
+
+Mira AI highlights that the web version of Claude Code is the most accessible for non-technical users [03:16].
+
+    Connect GitHub: In Claude's settings, navigate to Connectors and authorize your GitHub account [00:17:1].
+
+    Create a Repository: On GitHub, create a new private repository for your project [00:18:2].
+
+    Launch Claude Code Web:
+
+        Click Code in the Claude interface and select the Web option [03:19].
+
+        Click Connect Repositories and select only the specific repository you created for the project to keep the focus narrow [00:20:9].
+
+        Authorize the installation and name your cloud environment (e.g., "test") [03:42].
+
+    Model Selection: Use the Opus 4.6 model for the best results in complex animation logic [03:48].
+
+Phase 2: Project Examples and Prompts
+1. Interactive X-Ray Reveal (Audio Landing Page) [01:09]
+
+    Method: Generate two identical images: a solid product image and an "X-ray" version with transparent casing [02:23].
+
+    Prompts:
+
+        Base Image Prompt (JSON):
+        {"subject": "premium over-ear noise-canceling headphones", "material": "matte black aluminum and plush memory foam leather", "background": "solid white", "lighting": "dramatic studio lighting, soft shadows", "camera_angle": "front-facing, slightly tilted", "style": "commercial product photography, 8k resolution"} [01:12]
+
+        Interactive Slider Prompt: "I have uploaded two images: 'solid_headphones.png' and 'xray_headphones.png'. Build a complete high-end audio e-commerce landing page similar to Apple or Sony using HTML, CSS, and Javascript. For the main hero section, layer these two images exactly on top of each other... create a custom vertical slider line with a drag handle... revealing the 'xray' image underneath." [00:23:8]
+
+2. Cinematic Video Typography [04:33]
+
+    Method: Generate a starting frame, then use Kling 3.0 to animate a 5-second cinematic video. Use the direct video URL in Claude Code [05:18].
+
+    Prompt: "Build a sleek, dark-mode tech startup landing page. The first section should be a massive bold headline... 'FUTURE'. Write CSS to mask a video inside the text, using this exact URL as the source: [PASTE URL]. Add a Javascript scroll event so that as I scroll down, the text scales up exponentially... revealing the full-screen video." [00:25:2]
+
+3. 3D Holographic Tilt Card [06:17]
+
+    Method: Generate three separate layers: background.png, character.png (with background removed), and foreground.png (e.g., pink dust embers) [06:22].
+
+    Prompt: "I have uploaded three images: 'background.png', 'character.png', and 'foreground.png'. Build a next-gen link-in-bio web dashboard... In the center, build a premium interactive 3D trading card by stacking these three images inside a container... write Javascript that tracks my mouse movement to tilt the card in 3D space, and apply different translateZ values to the three images to create a deep holographic parallax effect." [00:27:1]
+
+4. Apple-Style Product Deconstruction [08:14]
+
+    Method: Create a video transition between an intact product and its deconstructed parts [08:49].
+
+    Prompt (The Secret): "Build a complete, Apple-style product landing page for a drone... create a 'sticky' scroll section... Instead of scrubbing the video, write a Javascript engine that pre-extracts every frame of this video into memory... then instantly draw those cached frames to a full-screen HTML canvas tied to the user's scroll position." [00:29:1]

@@ -1,0 +1,38 @@
+Website Design Techniques
+
+    Visual Cloning (Inspiration Scrapping):
+    Instead of describing a site from scratch, you find a website you like (e.g., Railway.app or a design on Dribbble), take a screenshot, and ask Claude to detect the HTML/CSS structure to replicate the layout and aesthetic.
+
+    Standardized UI Components:
+    Using pre-made "building blocks" to ensure the site doesn't look generic. This involves moving away from basic HTML elements to more polished, reusable templates for things like buttons, avatars, and accordions.
+
+    Dynamic Backgrounds:
+    Implementing radial gradients and blurred colored circles (purple, blue, pink, and teal) to add texture and "character" to minimalist sites, making them feel more complete.
+
+    Scroll-Triggered Animations:
+    Adding "motion" where elements glide, fly, or flow into the page as the user scrolls down, which increases the perceived professional quality of the site.
+
+    Micro-Interactions (Hover Effects):
+    Using smooth transitions (e.g., a 300ms delay) for hover states, such as buttons enlarging slightly or boxes moving up, to avoid "jagged" or "rough" instant popping.
+
+    3D Graphic Integration:
+    Embedding interactive 3D elements (like moving lines or boxes that follow the cursor) "above the fold" (the first thing a user sees) to create a high-end, "Stripe-like" feel.
+
+    Iterative Editing with Screenshots:
+    Instead of using complex technical descriptions to fix layout issues (like an empty grid), you take a screenshot of the specific section and tell Claude: "Change this section in the screenshot to be a 4x4 grid."
+
+Libraries and Tools Used
+
+    Tailwind CSS: A utility-first CSS library used for low-level styling (padding, widths, columns).
+
+    Shadcn UI: A collection of re-usable components built on top of Tailwind, used for professional UI elements like buttons and navigation.
+
+    GSAP (GreenSock Animation Platform): The primary library used for the complex "flying" and "gliding" scroll animations.
+
+    Framer Motion (motion.dev): Used to bring individual elements to life, specifically for smooth hover effects and micro-interactions.
+
+    Three.js: A cross-browser JavaScript library and API used to create and display animated 3D computer graphics in a web browser.
+
+    Spline: A 3D design tool that allows for the creation and export of interactive 3D scenes (like the background graphics mentioned in the video) directly into web code.
+
+    Google Fonts: A library of free, open-source fonts used to improve the typography and overall "feel" of the website's text.
