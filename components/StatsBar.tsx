@@ -4,10 +4,10 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const stats = [
-  { number: "150+", label: "Clients Served" },
-  { number: "8", label: "Core Disciplines" },
+  { number: "150+", label: "Projects Delivered" },
+  { number: "4", label: "Core Services" },
   { number: "98%", label: "Client Retention" },
-  { number: "$40M+", label: "Revenue Generated" },
+  { number: "10M+", label: "Views Generated" },
 ];
 
 export default function StatsBar() {
@@ -23,14 +23,14 @@ export default function StatsBar() {
             initial={{ opacity: 0, y: 30 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
-            style={{ background: "var(--cream)", padding: "52px 48px" }}
+            style={{ background: "var(--bg2)", padding: "52px 48px" }}
           >
             <span style={{
-              fontFamily: "var(--font-cormorant)", fontSize: 64, fontWeight: 600, letterSpacing: "-0.03em", color: "var(--ink)", display: "block", lineHeight: 1,
+              fontFamily: "var(--font-dm-sans)", fontSize: 56, fontWeight: 700, letterSpacing: "-0.03em", color: "var(--text)", display: "block", lineHeight: 1,
             }}>
               {s.number}
             </span>
-            <span className="block uppercase" style={{ fontSize: 12, fontWeight: 400, letterSpacing: "0.06em", color: "var(--muted)", marginTop: 12 }}>
+            <span className="block uppercase" style={{ fontSize: 12, fontWeight: 400, letterSpacing: "0.06em", color: "var(--text-muted2)", marginTop: 12 }}>
               {s.label}
             </span>
           </motion.div>

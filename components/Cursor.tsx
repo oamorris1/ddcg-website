@@ -60,7 +60,7 @@ export default function Cursor() {
           width: 10,
           height: 10,
           borderRadius: "50%",
-          background: "var(--ink)",
+          background: "rgba(255,255,255,0.9)",
           transition: "width 0.2s, height 0.2s",
         }}
       />
@@ -71,7 +71,8 @@ export default function Cursor() {
           width: 36,
           height: 36,
           borderRadius: "50%",
-          border: "1px solid rgba(28,28,22,0.3)",
+          border: "1px solid var(--gold)",
+          opacity: 0.5,
           transition: "width 0.3s, height 0.3s",
         }}
       />

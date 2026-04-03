@@ -2,12 +2,11 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import Image from "next/image";
 
-const cases = [
-  { cat: "Marketing", title: "Regional Retail Brand Scale-Up", result: "340%", label: "Increase in Qualified Leads" },
-  { cat: "AI Content", title: "AI-Powered Content Engine", result: "12×", label: "Content Output Increase" },
-  { cat: "Digital Transformation", title: "Enterprise Legacy Migration", result: "60%", label: "Reduction in Infra Costs" },
+const milestones = [
+  { result: "2.4M", label: "Views", desc: "High-retention AI brand films engineered for algorithmic virality." },
+  { result: "12×", label: "Output", desc: "Custom-built \"Content Engines\" that scale your presence without quality decay." },
+  { result: "340%", label: "Engagement", desc: "Interactive AI Avatars and Agents that turn passive viewers into active communities." },
 ];
 
 function MotionBlock({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
@@ -23,58 +22,49 @@ function MotionBlock({ children, delay = 0 }: { children: React.ReactNode; delay
 
 export default function Portfolio() {
   return (
-    <section id="portfolio" className="section-pad-mobile" style={{ background: "var(--cream2)", borderTop: "1px solid var(--border)", padding: "120px 60px" }}>
+    <section id="portfolio" className="section-pad-mobile" style={{ background: "var(--bg2)", borderTop: "1px solid var(--border)", padding: "120px 60px" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        {/* Header with image */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center" style={{ gap: 64, marginBottom: 80 }}>
-          <div>
-            <MotionBlock>
-              <div className="flex items-center gap-4" style={{ marginBottom: 24 }}>
-                <div style={{ width: 28, height: 1, background: "var(--muted2)" }} />
-                <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "var(--muted)" }}>Our Work</span>
-              </div>
-            </MotionBlock>
-            <MotionBlock delay={0.1}>
-              <h2 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(44px, 5.5vw, 72px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.05, color: "var(--ink)" }}>
-                Results That Speak <em style={{ color: "var(--ink3)" }}>Louder</em>
-              </h2>
-            </MotionBlock>
-            <MotionBlock delay={0.2}>
-              <p className="font-light" style={{ fontSize: 16, lineHeight: 1.85, color: "var(--muted)", marginTop: 20 }}>
-                Real outcomes from real engagements. Measurable impact across every discipline.
-              </p>
-            </MotionBlock>
-          </div>
-
-          <MotionBlock delay={0.15}>
-            <div className="overflow-hidden" style={{ borderRadius: 16 }}>
-              <Image src="/img/portfolio.png" alt="Analytics dashboard showing dramatic growth metrics"
-                width={600} height={400} className="w-full h-auto object-cover img-zoom" style={{ borderRadius: 16 }} />
+        {/* Header */}
+        <div style={{ marginBottom: 80 }}>
+          <MotionBlock>
+            <div className="flex items-center gap-4" style={{ marginBottom: 24 }}>
+              <div style={{ width: 28, height: 1, background: "var(--gold)", opacity: 0.4 }} />
+              <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "var(--text-muted2)" }}>Our Work</span>
             </div>
+          </MotionBlock>
+          <MotionBlock delay={0.1}>
+            <h2 style={{ fontFamily: "var(--font-dm-sans)", fontSize: "clamp(36px, 4.5vw, 60px)", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.05, color: "var(--text)", marginBottom: 24 }}>
+              The Velocity of <span style={{ color: "var(--text-muted)" }}>Impact</span>
+            </h2>
+          </MotionBlock>
+          <MotionBlock delay={0.2}>
+            <p className="font-light" style={{ fontSize: 18, lineHeight: 1.85, color: "var(--text-muted)", maxWidth: 720 }}>
+              Where algorithmic precision meets creative scale. We don&apos;t just produce content; we engineer high-performance digital ecosystems. By integrating custom-trained models and agentic workflows, we bypass traditional production bottlenecks to deliver hyper-growth metrics that were previously impossible.
+            </p>
           </MotionBlock>
         </div>
 
-        {/* Case study rows */}
-        <div>
-          {cases.map((c, i) => (
-            <MotionBlock key={c.title} delay={i * 0.12}>
-              <div
-                className="portfolio-row group relative grid grid-cols-1 lg:grid-cols-[120px_1fr_180px] items-center transition-all duration-300"
-                style={{ padding: "36px 0", borderBottom: "1px solid var(--border)", gap: 24 }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.paddingLeft = "16px"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.paddingLeft = "0px"; }}
-              >
-                <div className="absolute bottom-0 left-0 right-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" style={{ height: 1, background: "var(--ink)" }} />
-                <span className="uppercase" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", color: "var(--muted2)" }}>{c.cat}</span>
-                <h3 style={{ fontFamily: "var(--font-cormorant)", fontSize: "clamp(22px, 2.8vw, 36px)", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--ink)" }}>
-                  {c.title}
-                </h3>
-                <div className="lg:text-right">
-                  <span style={{ fontFamily: "var(--font-cormorant)", fontSize: 48, fontWeight: 600, letterSpacing: "-0.03em", color: "var(--ink)", display: "block", lineHeight: 1 }}>
-                    {c.result}
-                  </span>
-                  <span className="block uppercase" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.06em", marginTop: 6 }}>{c.label}</span>
-                </div>
+        {/* Measurable Milestones */}
+        <MotionBlock delay={0.25}>
+          <div className="flex items-center gap-4" style={{ marginBottom: 40 }}>
+            <div style={{ width: 28, height: 1, background: "var(--gold)", opacity: 0.4 }} />
+            <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "var(--text-muted2)" }}>Measurable Milestones</span>
+          </div>
+        </MotionBlock>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3" style={{ gap: 1, background: "var(--border)", borderRadius: 12, overflow: "hidden" }}>
+          {milestones.map((m, i) => (
+            <MotionBlock key={m.label} delay={0.3 + i * 0.12}>
+              <div style={{ background: "var(--surface)", padding: "48px 40px", height: "100%" }}>
+                <span style={{ fontFamily: "var(--font-dm-sans)", fontSize: 56, fontWeight: 700, letterSpacing: "-0.03em", color: "var(--text)", display: "block", lineHeight: 1 }}>
+                  {m.result}
+                </span>
+                <span className="block uppercase" style={{ fontSize: 12, fontWeight: 600, letterSpacing: "0.08em", color: "var(--accent-hover)", marginTop: 8, marginBottom: 16 }}>
+                  {m.label}
+                </span>
+                <p className="font-light" style={{ fontSize: 15, lineHeight: 1.7, color: "var(--text-muted)" }}>
+                  {m.desc}
+                </p>
               </div>
             </MotionBlock>
           ))}

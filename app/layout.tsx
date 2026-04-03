@@ -18,12 +18,12 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Digital Dynamics Consultants Group | Scale. Transform. Lead.",
+  title: "Digital Dynamics Consultants Group | Film. Create. Elevate.",
   description:
-    "Full-service consulting — marketing, AI content, digital transformation, software engineering, and logistics.",
+    "AI-powered film production, content creation, custom character models, and full-spectrum brand strategy — from concept to campaign.",
   openGraph: {
     title: "Digital Dynamics Consultants Group",
-    description: "Scale Faster. Build Smarter. Lead the Market.",
+    description: "AI Film Production. Content Creation. Brand Strategy.",
     type: "website",
   },
 };

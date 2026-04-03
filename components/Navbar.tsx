@@ -20,7 +20,7 @@ export default function Navbar() {
       style={{
         height: 72,
         padding: "0 60px",
-        background: "rgba(245,242,235,0.92)",
+        background: "rgba(10,10,15,0.85)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderBottom: "1px solid var(--border)",
@@ -29,28 +29,28 @@ export default function Navbar() {
       {/* Logo */}
       <a
         href="#"
-        className="flex items-center gap-1 shrink-0"
+        className="flex items-center gap-2 shrink-0"
         onMouseEnter={() => setLogoHover(true)}
         onMouseLeave={() => setLogoHover(false)}
       >
         <div style={{ transition: "transform 0.3s", transform: logoHover ? "rotate(8deg)" : "rotate(0deg)" }}>
-          <AtomLogo size={48} dark={false} />
+          <AtomLogo size={44} dark={true} />
         </div>
         <span
           className="uppercase"
           style={{
             fontFamily: "var(--font-dm-sans)",
-            fontSize: 15,
+            fontSize: 14,
             fontWeight: 500,
             letterSpacing: "0.08em",
-            color: "var(--ink)",
+            color: "var(--text)",
           }}
         >
           Digital Dynamics
         </span>
       </a>
 
-      {/* Center nav links */}
+      {/* Center nav links — visible on desktop */}
       <div className="hidden lg:flex items-center gap-10">
         {navLinks.map((l) => (
           <a
@@ -61,17 +61,17 @@ export default function Navbar() {
               fontSize: 12,
               fontWeight: 500,
               letterSpacing: "0.08em",
-              color: "var(--muted)",
+              color: "var(--text-muted)",
               transition: "color 0.2s",
               paddingBottom: 2,
             }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--ink)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--muted)"; }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--text)"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}
           >
             {l.label}
             <span
               className="absolute bottom-0 left-0 right-0 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
-              style={{ height: 1, background: "var(--ink)" }}
+              style={{ height: 1, background: "var(--gold)" }}
             />
           </a>
         ))}
@@ -87,17 +87,17 @@ export default function Navbar() {
           letterSpacing: "0.06em",
           padding: "10px 26px",
           borderRadius: 4,
-          background: "var(--ink)",
-          color: "var(--cream)",
+          background: "var(--accent)",
+          color: "var(--text)",
         }}
         onMouseEnter={(e) => {
           const el = e.currentTarget as HTMLElement;
-          el.style.background = "var(--ink2)";
+          el.style.background = "var(--accent-hover)";
           el.style.transform = "translateY(-1px)";
         }}
         onMouseLeave={(e) => {
           const el = e.currentTarget as HTMLElement;
-          el.style.background = "var(--ink)";
+          el.style.background = "var(--accent)";
           el.style.transform = "translateY(0)";
         }}
       >
@@ -107,21 +107,21 @@ export default function Navbar() {
       {/* Mobile menu button */}
       <button className="lg:hidden ml-auto p-2" onClick={() => setOpen(!open)} aria-label="Menu">
         <div className="flex flex-col gap-1.5">
-          <span className="block w-5 h-0.5 transition-transform duration-300" style={{ background: "var(--ink)", transform: open ? "rotate(45deg) translate(2px,2px)" : "none" }} />
-          <span className="block w-5 h-0.5 transition-opacity duration-300" style={{ background: "var(--ink)", opacity: open ? 0 : 1 }} />
-          <span className="block w-5 h-0.5 transition-transform duration-300" style={{ background: "var(--ink)", transform: open ? "rotate(-45deg) translate(2px,-2px)" : "none" }} />
+          <span className="block w-5 h-0.5 transition-transform duration-300" style={{ background: "var(--text)", transform: open ? "rotate(45deg) translate(2px,2px)" : "none" }} />
+          <span className="block w-5 h-0.5 transition-opacity duration-300" style={{ background: "var(--text)", opacity: open ? 0 : 1 }} />
+          <span className="block w-5 h-0.5 transition-transform duration-300" style={{ background: "var(--text)", transform: open ? "rotate(-45deg) translate(2px,-2px)" : "none" }} />
         </div>
       </button>
 
       {open && (
         <div className="absolute top-[72px] left-0 right-0 flex flex-col items-center gap-6 py-8 lg:hidden"
-          style={{ background: "rgba(245,242,235,0.97)", borderBottom: "1px solid var(--border)" }}>
+          style={{ background: "rgba(10,10,15,0.97)", backdropFilter: "blur(20px)", borderBottom: "1px solid var(--border)" }}>
           {navLinks.map((l) => (
             <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="uppercase"
-              style={{ fontSize: 12, fontWeight: 500, letterSpacing: "0.08em", color: "var(--muted)" }}>{l.label}</a>
+              style={{ fontSize: 12, fontWeight: 500, letterSpacing: "0.08em", color: "var(--text-muted)" }}>{l.label}</a>
           ))}
           <a href="#contact" onClick={() => setOpen(false)} className="uppercase"
-            style={{ fontSize: 13, fontWeight: 500, padding: "10px 26px", borderRadius: 4, background: "var(--ink)", color: "var(--cream)" }}>
+            style={{ fontSize: 13, fontWeight: 500, padding: "10px 26px", borderRadius: 4, background: "var(--accent)", color: "var(--text)" }}>
             Get Started
           </a>
         </div>

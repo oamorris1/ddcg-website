@@ -5,17 +5,17 @@ import { motion, useInView } from "framer-motion";
 import Image from "next/image";
 
 const contactItems = [
-  { icon: "✉", title: "info@ddcg.net", sub: "Email Us" },
-  { icon: "📍", title: "Houston, TX — Serving Clients Worldwide", sub: "Location" },
+  { icon: "\u2709", title: "info@ddcg.net", sub: "Email Us" },
+  { icon: "\uD83D\uDCCD", title: "Houston, TX \u2014 Serving Clients Worldwide", sub: "Location" },
 ];
 
 const inputStyle: React.CSSProperties = {
-  width: "100%", background: "var(--cream2)", border: "1px solid var(--border)", borderRadius: 3,
-  padding: "14px 18px", fontSize: 14, color: "var(--ink)", outline: "none", transition: "border-color 0.2s",
+  width: "100%", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: 3,
+  padding: "14px 18px", fontSize: 14, color: "var(--text)", outline: "none", transition: "border-color 0.2s",
   fontFamily: "var(--font-dm-sans)",
 };
 
-function onF(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) { e.currentTarget.style.borderColor = "var(--ink3)"; }
+function onF(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) { e.currentTarget.style.borderColor = "var(--accent)"; }
 function onB(e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) { e.currentTarget.style.borderColor = "var(--border)"; }
 
 function M({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
@@ -52,12 +52,12 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="relative overflow-hidden section-pad-mobile" style={{ background: "var(--cream)", borderTop: "1px solid var(--border)", padding: "120px 60px" }}>
+    <section id="contact" className="relative overflow-hidden section-pad-mobile" style={{ background: "var(--bg)", borderTop: "1px solid var(--border)", padding: "120px 60px" }}>
       {/* Ghost text */}
       <div className="absolute pointer-events-none select-none hidden lg:block" style={{ bottom: "5%", right: "-2%", zIndex: 0 }}>
         <span style={{
-          fontFamily: "var(--font-cormorant)", fontSize: "clamp(160px, 22vw, 300px)", fontWeight: 600, fontStyle: "italic",
-          color: "transparent", WebkitTextStroke: "1px rgba(28,28,22,0.04)", lineHeight: 1,
+          fontFamily: "var(--font-dm-sans)", fontSize: "clamp(160px, 22vw, 300px)", fontWeight: 800,
+          color: "transparent", WebkitTextStroke: "1px rgba(255,255,255,0.02)", lineHeight: 1,
         }}>Hello</span>
       </div>
 
@@ -67,27 +67,27 @@ export default function Contact() {
           <div>
             <M>
               <div className="flex items-center gap-4" style={{ marginBottom: 24 }}>
-                <div style={{ width: 28, height: 1, background: "var(--muted2)" }} />
-                <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "var(--muted)" }}>Get In Touch</span>
+                <div style={{ width: 28, height: 1, background: "var(--gold)", opacity: 0.4 }} />
+                <span className="uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.14em", color: "var(--text-muted2)" }}>Get In Touch</span>
               </div>
             </M>
             <M delay={0.1}>
               <h2 style={{
-                fontFamily: "var(--font-cormorant)", fontSize: "clamp(36px, 4.5vw, 58px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.05, color: "var(--ink)", marginBottom: 20,
+                fontFamily: "var(--font-dm-sans)", fontSize: "clamp(32px, 4vw, 52px)", fontWeight: 700, letterSpacing: "-0.02em", lineHeight: 1.05, color: "var(--text)", marginBottom: 20,
               }}>
-                Let&apos;s Build Something <em style={{ color: "var(--ink3)" }}>Great.</em>
+                Let&apos;s Create Something <span style={{ color: "var(--text-muted)" }}>Extraordinary.</span>
               </h2>
             </M>
             <M delay={0.2}>
-              <p className="font-light" style={{ fontSize: 16, lineHeight: 1.9, color: "var(--muted)" }}>
-                Ready to accelerate your growth? Our team is ready to deliver results.
+              <p className="font-light" style={{ fontSize: 16, lineHeight: 1.9, color: "var(--text-muted)" }}>
+                Ready to elevate your brand? Our team is ready to bring your vision to life.
               </p>
             </M>
           </div>
 
           <M delay={0.15}>
             <div className="overflow-hidden" style={{ borderRadius: 16 }}>
-              <Image src="/img/contact.png" alt="Welcoming handshake" width={600} height={400}
+              <Image src="/img/contact.png" alt="Creative collaboration" width={600} height={400}
                 className="w-full h-auto object-cover img-zoom" style={{ borderRadius: 16 }} />
             </div>
           </M>
@@ -105,16 +105,24 @@ export default function Contact() {
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.paddingLeft = "0px"; }}
                 >
                   <div className="flex items-center justify-center shrink-0"
-                    style={{ width: 40, height: 40, borderRadius: 4, background: "var(--cream2)", border: "1px solid var(--border)", fontSize: 16 }}>
+                    style={{ width: 40, height: 40, borderRadius: 4, background: "var(--surface)", border: "1px solid var(--border)", fontSize: 16 }}>
                     {item.icon}
                   </div>
                   <div>
-                    <span className="block" style={{ fontSize: 15, fontWeight: 400, color: "var(--ink)" }}>{item.title}</span>
-                    <span className="block" style={{ fontSize: 12, color: "var(--muted)" }}>{item.sub}</span>
+                    <span className="block" style={{ fontSize: 15, fontWeight: 400, color: "var(--text)" }}>{item.title}</span>
+                    <span className="block" style={{ fontSize: 12, color: "var(--text-muted2)" }}>{item.sub}</span>
                   </div>
                 </div>
               </M>
             ))}
+
+            {/* Calendly placeholder */}
+            <M delay={0.2}>
+              <div style={{ marginTop: 32, padding: "24px", borderRadius: 8, background: "var(--surface)", border: "1px solid var(--border)" }}>
+                <span className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--gold)", marginBottom: 8 }}>Coming Soon</span>
+                <span className="block" style={{ fontSize: 15, color: "var(--text-muted)" }}>Book a call directly on our calendar</span>
+              </div>
+            </M>
           </div>
 
           {/* Right — Form */}
@@ -122,11 +130,11 @@ export default function Contact() {
             <M delay={0.05}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Name</label>
+                  <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--text-muted2)", marginBottom: 8 }}>Name</label>
                   <input name="name" type="text" placeholder="Your name" required style={inputStyle} onFocus={onF} onBlur={onB} />
                 </div>
                 <div>
-                  <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Company</label>
+                  <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--text-muted2)", marginBottom: 8 }}>Company</label>
                   <input name="company" type="text" placeholder="Company name" style={inputStyle} onFocus={onF} onBlur={onB} />
                 </div>
               </div>
@@ -134,32 +142,32 @@ export default function Contact() {
             <M delay={0.1}>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Email</label>
+                  <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--text-muted2)", marginBottom: 8 }}>Email</label>
                   <input name="email" type="email" placeholder="you@company.com" required style={inputStyle} onFocus={onF} onBlur={onB} />
                 </div>
                 <div>
-                  <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Phone</label>
+                  <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--text-muted2)", marginBottom: 8 }}>Phone</label>
                   <input name="phone" type="tel" placeholder="(555) 000-0000" style={inputStyle} onFocus={onF} onBlur={onB} />
                 </div>
               </div>
             </M>
             <M delay={0.15}>
               <div>
-                <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Service Interest</label>
-                <select name="service" defaultValue="" style={{ ...inputStyle, appearance: "none", color: "var(--muted)" }} onFocus={onF} onBlur={onB}
-                  onChange={(e) => { e.currentTarget.style.color = e.currentTarget.value ? "var(--ink)" : "var(--muted)"; }}>
+                <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--text-muted2)", marginBottom: 8 }}>Service Interest</label>
+                <select name="service" defaultValue="" style={{ ...inputStyle, appearance: "none", color: "var(--text-muted)" }} onFocus={onF} onBlur={onB}
+                  onChange={(e) => { e.currentTarget.style.color = e.currentTarget.value ? "var(--text)" : "var(--text-muted)"; }}>
                   <option value="" disabled>Select a service</option>
-                  <option value="Marketing & Advertising">Marketing & Advertising</option>
-                  <option value="AI Reels & Content Creation">AI Reels & Content Creation</option>
-                  <option value="Digital Transformation">Digital Transformation</option>
-                  <option value="Logistics & Engineering">Logistics & Engineering</option>
+                  <option value="Film & Cinematography">Film & Cinematography</option>
+                  <option value="AI Content Creation">AI Content Creation</option>
+                  <option value="Custom Character Models">Custom Character Models</option>
+                  <option value="Social Media & Brand Strategy">Social Media & Brand Strategy</option>
                   <option value="Multiple Services">Multiple Services</option>
                 </select>
               </div>
             </M>
             <M delay={0.2}>
               <div>
-                <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--muted)", marginBottom: 8 }}>Project Description</label>
+                <label className="block uppercase" style={{ fontSize: 11, fontWeight: 500, letterSpacing: "0.10em", color: "var(--text-muted2)", marginBottom: 8 }}>Project Description</label>
                 <textarea name="message" placeholder="Tell us about your project..." rows={5} style={{ ...inputStyle, resize: "none" }} onFocus={onF} onBlur={onB} />
               </div>
             </M>
@@ -169,18 +177,18 @@ export default function Contact() {
                 className="uppercase transition-colors duration-200"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.98 }}
-                style={{ width: "100%", padding: "14px", borderRadius: 4, fontSize: 13, fontWeight: 500, letterSpacing: "0.06em", background: "var(--ink)", color: "var(--cream)", border: "none", cursor: status === "sending" ? "wait" : "pointer", opacity: status === "sending" ? 0.7 : 1 }}>
+                style={{ width: "100%", padding: "14px", borderRadius: 4, fontSize: 13, fontWeight: 500, letterSpacing: "0.06em", background: "var(--accent)", color: "var(--text)", border: "none", cursor: status === "sending" ? "wait" : "pointer", opacity: status === "sending" ? 0.7 : 1 }}>
                 {status === "sending" ? "Sending..." : status === "sent" ? "Message Sent!" : "Send Message"}
               </motion.button>
             </M>
 
             {status === "sent" && (
-              <p style={{ fontSize: 14, color: "var(--ink3)", textAlign: "center", marginTop: 4 }}>
+              <p style={{ fontSize: 14, color: "var(--accent-hover)", textAlign: "center", marginTop: 4 }}>
                 Thank you! We&apos;ll be in touch shortly.
               </p>
             )}
             {status === "error" && (
-              <p style={{ fontSize: 14, color: "#944", textAlign: "center", marginTop: 4 }}>
+              <p style={{ fontSize: 14, color: "#C44", textAlign: "center", marginTop: 4 }}>
                 Something went wrong. Please try again or email us directly.
               </p>
             )}

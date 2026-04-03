@@ -12,8 +12,8 @@ export default function AtomLogo({ size = 80, dark = false, className = '' }: At
   const rafRef = useRef<number>()
   const startRef = useRef<number | null>(null)
 
-  const ink = dark ? '#F5F2EB' : '#1C1C16'
-  const bg = dark ? '#1C1C16' : null
+  const ink = dark ? '#FFFFFF' : '#FFFFFF'
+  const bg = dark ? '#0A0A0F' : null
 
   useEffect(() => {
     const canvas = canvasRef.current
